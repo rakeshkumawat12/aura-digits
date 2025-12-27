@@ -1,62 +1,116 @@
-import { Button } from '@/components/Button';
-import styles from '@/styles/Home.module.css';
+import { Navbar } from '@/components/layout/Navbar';
+import { Hero } from '@/components/shared/Hero';
+import { FeatureCard } from '@/components/shared/FeatureCard';
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Welcome to Aura Digits</h1>
-        <p className={styles.description}>
-          A production-ready Next.js starter with TypeScript, clean
-          architecture, and best practices.
-        </p>
+    <>
+      <Navbar />
+      <main>
+        {/* Hero Section */}
+        <Hero />
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>Documentation →</h2>
-            <p>Learn about Next.js features and API.</p>
-          </a>
+        {/* Features Section */}
+        <section className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
+                Explore Your Numerology Profile
+              </h2>
+              <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                Discover the power of numbers and unlock insights about your
+                personality, destiny, and life path
+              </p>
+            </div>
 
-          <a
-            href="https://nextjs.org/learn"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>Learn →</h2>
-            <p>Learn Next.js in an interactive course with quizzes!</p>
-          </a>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <FeatureCard
+                icon="🔢"
+                title="Mulank Number"
+                description="Your driver number reveals your core personality traits, natural talents, and how you approach life's challenges."
+                color="purple"
+              />
+              <FeatureCard
+                icon="⭐"
+                title="Destiny Number"
+                description="Understand your life purpose, goals, and the path you're meant to follow based on your full name."
+                color="blue"
+              />
+              <FeatureCard
+                icon="🎯"
+                title="Lu Shu Grid"
+                description="A powerful 3x3 grid analysis revealing your strengths, weaknesses, and areas of development."
+                color="gold"
+              />
+            </div>
+          </div>
+        </section>
 
-          <a
-            href="https://vercel.com/templates?framework=next.js"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>Templates →</h2>
-            <p>Explore starter templates for Next.js.</p>
-          </a>
+        {/* How It Works Section */}
+        <section className="py-20 px-4 bg-bg-secondary/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-white">How It Works</h2>
+              <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                Get your personalized numerology reading in 3 simple steps
+              </p>
+            </div>
 
-          <a
-            href="https://vercel.com"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>Deploy →</h2>
-            <p>Deploy your Next.js app instantly with Vercel.</p>
-          </a>
-        </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-primary to-primary-light rounded-full flex items-center justify-center text-2xl font-bold text-white mb-4">
+                  1
+                </div>
+                <h3 className="text-2xl font-bold text-white">Enter Your Details</h3>
+                <p className="text-white/70">
+                  Provide your full name and date of birth in our secure
+                  calculator
+                </p>
+              </div>
 
-        <div className={styles.cta}>
-          <Button>Get Started</Button>
-        </div>
-      </div>
-    </main>
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-secondary to-secondary-light rounded-full flex items-center justify-center text-2xl font-bold text-white mb-4">
+                  2
+                </div>
+                <h3 className="text-2xl font-bold text-white">Calculate Your Numbers</h3>
+                <p className="text-white/70">
+                  Our algorithm instantly calculates your Mulank, Destiny, and
+                  Lu Shu Grid
+                </p>
+              </div>
+
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-accent-gold to-accent-rose rounded-full flex items-center justify-center text-2xl font-bold text-white mb-4">
+                  3
+                </div>
+                <h3 className="text-2xl font-bold text-white">Get Your Reading</h3>
+                <p className="text-white/70">
+                  Receive detailed insights, interpretations, and guidance for
+                  your life path
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="glass-strong rounded-3xl p-12 text-center space-y-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
+                Ready to Discover Your Numbers?
+              </h2>
+              <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                Start your numerology journey today and unlock the wisdom hidden
+                in your name and birth date
+              </p>
+              <a href="/calculator" className="btn-secondary inline-block">
+                Calculate Now ✨
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
   );
 }

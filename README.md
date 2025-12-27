@@ -1,47 +1,29 @@
-# Aura Digits
+# Aura Digits - Numerology Web Application
 
-A production-ready Next.js starter template with TypeScript, clean architecture, and best practices.
+> A premium, mystical numerology platform built with Next.js 15 and TypeScript
 
-## Features
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-- **Next.js 15** with App Router
-- **TypeScript** with strict configuration
-- **ESLint** and **Prettier** for code quality
-- **Absolute imports** with `@/` path alias
-- **Clean folder structure** for scalability
-- **CSS Modules** for component styling
-- **Environment variables** setup
-- **Reusable components** with examples
+---
 
-## Project Structure
+## ✨ Overview
 
-```
-aura-digits/
-├── src/
-│   ├── app/                 # Next.js App Router pages
-│   │   ├── layout.tsx       # Root layout
-│   │   ├── page.tsx         # Home page
-│   │   └── globals.css      # Global styles
-│   ├── components/          # Reusable UI components
-│   │   ├── Button.tsx
-│   │   └── Button.module.css
-│   ├── hooks/               # Custom React hooks
-│   │   └── useLocalStorage.ts
-│   ├── lib/                 # Utility functions
-│   │   └── utils.ts
-│   ├── styles/              # Module CSS files
-│   │   └── Home.module.css
-│   └── types/               # TypeScript type definitions
-│       └── index.ts
-├── .env.local.example       # Environment variables template
-├── .eslintrc.json           # ESLint configuration
-├── .prettierrc              # Prettier configuration
-├── next.config.ts           # Next.js configuration
-├── tsconfig.json            # TypeScript configuration
-└── package.json             # Dependencies and scripts
-```
+**Aura Digits** is a modern numerology web application that provides personalized insights based on users' names and birth dates. Features include Mulank (Driver Number), Destiny Number calculations, and Lu Shu Grid analysis with a beautiful dark mystical theme.
 
-## Getting Started
+### 🎯 Key Features
+
+- 🔮 **Numerology Calculations** - Mulank, Destiny, Lu Shu Grid
+- 🎨 **Dark Mystical Theme** - Beautiful cosmic UI with animations
+- 📱 **Fully Responsive** - Mobile-first design
+- ⚡ **Lightning Fast** - Optimized Next.js 15 performance
+- 🔒 **Type-Safe** - Full TypeScript coverage
+- ♿ **Accessible** - WCAG AA compliant
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -50,186 +32,299 @@ aura-digits/
 
 ### Installation
 
-1. Clone or download this repository:
-
 ```bash
-cd aura-digits
-```
-
-2. Install dependencies:
-
-```bash
+# Install dependencies
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
 
-3. Set up environment variables:
-
-```bash
+# Set up environment variables
 cp .env.local.example .env.local
-```
 
-Edit `.env.local` with your configuration.
-
-### Development
-
-Run the development server:
-
-```bash
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Building for Production
+---
 
-Create an optimized production build:
+## 📁 Project Structure
+
+```
+aura-digits/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── layout.tsx       # Root layout
+│   │   ├── page.tsx         # Landing page
+│   │   └── globals.css      # Global styles with theme
+│   ├── components/          # React components
+│   │   ├── ui/              # Base UI (Card, Button, Input, Badge, Modal)
+│   │   ├── layout/          # Layout (Navbar, Footer, Container)
+│   │   ├── features/        # Feature-specific components
+│   │   └── shared/          # Shared components (Hero, FeatureCard)
+│   ├── lib/                 # Business logic
+│   │   ├── numerology/      # Calculation logic (Mulank, Destiny, Lu Shu)
+│   │   ├── validation/      # Form validation
+│   │   └── utils.ts         # Utilities
+│   ├── hooks/               # Custom React hooks
+│   ├── types/               # TypeScript definitions
+│   │   ├── numerology.ts    # Numerology types
+│   │   ├── user.ts          # User types
+│   │   └── blog.ts          # Blog types
+│   └── styles/              # Styling
+│       ├── themes/          # dark-mystical.css (CSS variables)
+│       └── animations/      # cosmic.css (animations)
+├── public/                  # Static assets
+├── ARCHITECTURE.md          # Complete architecture guide
+├── IMPLEMENTATION_PLAN.md   # Development roadmap
+├── PROJECT_SUMMARY.md       # Detailed overview
+└── QUICK_START.md           # Quick reference
+```
+
+---
+
+## 🎨 Design System
+
+### Color Palette
+
+**Primary Colors (Mystical)**
+
+```css
+Deep Purple: #6b46c1 (spiritual, mystical)
+Electric Blue: #4299e1 (trust, clarity)
+Cosmic Violet: #805ad5 (intuition)
+```
+
+**Background (Deep Space)**
+
+```css
+Deep Space: #0a0e27 (primary background)
+Dark Nebula: #1a1f3a (secondary background)
+Card Surface: #2d3748 (elevated surfaces)
+```
+
+**Accents**
+
+```css
+Gold: #f6ad55 (premium, enlightenment)
+Rose Gold: #ed8936 (warmth, energy)
+Cosmic Pink: #ed64a6 (intuition, love)
+```
+
+### Typography
+
+- **Headings**: Inter (modern, clean)
+- **Body**: Inter
+- **Accents**: Playfair Display (mystical numbers)
+
+### Available Components
+
+✅ **Button** - Multiple variants (primary, secondary, outline)
+✅ **Card** - Glass morphism effects (default, glass, elevated)
+🚧 **Input** - Form inputs with validation
+🚧 **Badge** - Number displays for numerology
+🚧 **Modal** - Overlay dialogs
+
+---
+
+## 📱 Application Pages
+
+### Planned Pages (See ARCHITECTURE.md for details)
+
+1. **Landing Page (/)** - Hero + Feature preview + CTA
+2. **Calculator (/calculator)** - Input name & DOB for calculations
+3. **Results (/results/[id])** - Display numerology insights
+4. **Authentication (/auth/login, /auth/signup)** - User login/signup
+5. **Blog (/blog)** - Educational content about numerology
+6. **About (/about)** - What is numerology, FAQ, methods
+7. **Profile (/profile)** - User dashboard with saved reports
+
+---
+
+## 🔮 Numerology Calculations
+
+### Mulank (Driver Number)
+
+Sum of birth date digits reduced to single digit.
+
+**Example**: Born on 25th → 2 + 5 = **7**
+
+### Destiny Number
+
+Based on name using Pythagorean numerology system.
+
+**System**: A=1, B=2... Z=26 (cyclical 1-9)
+
+### Lu Shu Grid
+
+3x3 grid analysis based on birth date numbers.
+
+```
+4 9 2
+3 5 7
+8 1 6
+```
+
+- **Missing numbers** → Areas to develop
+- **Repeating numbers** → Natural strengths
+
+---
+
+## 💻 Development
+
+### Available Scripts
 
 ```bash
-npm run build
-npm run start
-# or
-yarn build
-yarn start
-# or
-pnpm build
-pnpm start
+npm run dev          # Start dev server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run format       # Format with Prettier
+npm run format:check # Check formatting
 ```
 
-## Code Quality
+### Code Style Guidelines
 
-### Linting
-
-Run ESLint to check for code quality issues:
-
-```bash
-npm run lint
-```
-
-### Formatting
-
-Format code with Prettier:
-
-```bash
-npm run format
-```
-
-Check formatting without making changes:
-
-```bash
-npm run format:check
-```
-
-## Key Configurations
-
-### TypeScript
-
-The project uses strict TypeScript configuration with:
-
-- Strict mode enabled
-- No unused locals/parameters
-- Force consistent casing in file names
-- Path aliases: `@/*` maps to `src/*`
+- ✅ Use TypeScript for all files
+- ✅ Follow ESLint configuration
+- ✅ Format code with Prettier
+- ✅ Use absolute imports: `@/components`
+- ✅ CSS Modules for component styles
+- ✅ Functional components only
 
 ### Absolute Imports
 
-Use the `@/` prefix for absolute imports:
+Use the `@/` prefix for clean imports:
 
 ```typescript
 import { Button } from '@/components/Button';
+import { Card } from '@/components/ui/Card';
 import { cn } from '@/lib/utils';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { NumerologyResult } from '@/types/numerology';
 ```
 
-### Environment Variables
+---
 
-- **Public variables**: Prefix with `NEXT_PUBLIC_` to expose to the browser
-- **Private variables**: Keep without prefix for server-side only
-- Never commit `.env.local` to version control
+## 🌐 Environment Variables
 
-## Components
+```env
+# Application
+NEXT_PUBLIC_APP_NAME=Aura Digits
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-### Button Component
-
-Example reusable component with variants and sizes:
-
-```typescript
-import { Button } from '@/components/Button';
-
-<Button variant="primary" size="medium">
-  Click me
-</Button>
+# Future: API, Database, Authentication
 ```
 
-## Custom Hooks
+See [.env.local.example](.env.local.example) for full reference.
 
-### useLocalStorage
+---
 
-Persist state in localStorage:
+## 🏗️ Tech Stack
 
-```typescript
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+| Category   | Technology                  |
+| ---------- | --------------------------- |
+| Framework  | Next.js 15 (App Router)     |
+| Language   | TypeScript 5.7              |
+| Styling    | CSS Modules + CSS Variables |
+| Fonts      | Inter + Playfair Display    |
+| Linting    | ESLint 9                    |
+| Formatting | Prettier 3                  |
+| Deployment | Vercel (recommended)        |
 
-const [value, setValue] = useLocalStorage('key', 'defaultValue');
-```
+---
 
-## Utilities
+## 📚 Documentation
 
-### cn (className combiner)
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Complete architecture and design system
+- **[IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md)** - Development roadmap and priorities
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Comprehensive project overview
+- **[QUICK_START.md](QUICK_START.md)** - Quick reference for common tasks
 
-Combine multiple class names:
+---
 
-```typescript
-import { cn } from '@/lib/utils';
+## 🎯 Development Roadmap
 
-const className = cn('base-class', condition && 'conditional-class');
-```
+### Phase 1: Foundation ✅
 
-### debounce
+- [x] Project setup with Next.js 15 + TypeScript
+- [x] Design system and dark mystical theme
+- [x] CSS variables and animations (cosmic theme)
+- [x] Base UI components (Button, Card)
+- [x] TypeScript type definitions
+- [x] Architecture documentation
 
-Limit function call frequency:
+### Phase 2: Core Features 🚧 (Next)
 
-```typescript
-import { debounce } from '@/lib/utils';
+- [ ] Landing page with Hero section
+- [ ] Navbar and Footer components
+- [ ] Calculator page with form validation
+- [ ] Numerology calculation logic (Mulank, Destiny, Lu Shu)
+- [ ] Results dashboard with visualizations
+- [ ] Authentication flow (Login/Signup)
 
-const debouncedFn = debounce(() => console.log('Called'), 300);
-```
+### Phase 3: Content Pages
 
-## Best Practices
+- [ ] Blog section (listing + detail pages)
+- [ ] About page with FAQ accordion
+- [ ] User profile and dashboard
+- [ ] Saved reports management
 
-1. **Component Organization**: Keep components small and focused
-2. **Type Safety**: Always define TypeScript types/interfaces
-3. **CSS Modules**: Use for component-specific styles
-4. **Server/Client Components**: Use 'use client' only when needed
-5. **Environment Variables**: Never commit sensitive data
-6. **Code Formatting**: Run Prettier before commits
-7. **Absolute Imports**: Use `@/` prefix for cleaner imports
+### Phase 4: Advanced Features
 
-## Learn More
+- [ ] PDF report generation
+- [ ] Compatibility checker
+- [ ] Remedies & recommendations
+- [ ] Angel numbers tracker
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs)
-- [React Documentation](https://react.dev)
+---
 
-## Deployment
+## 🤝 Contributing
 
-The easiest way to deploy is using [Vercel](https://vercel.com):
+Contributions are welcome! Please follow these steps:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Other deployment options:
+---
 
-- [Docker](https://nextjs.org/docs/deployment#docker-image)
-- [Self-hosting](https://nextjs.org/docs/deployment#self-hosting)
-- [Static Export](https://nextjs.org/docs/app/building-your-application/deploying/static-exports)
+## 📊 Performance Targets
 
-## License
+- First Contentful Paint (FCP): < 1.5s
+- Largest Contentful Paint (LCP): < 2.5s
+- Time to Interactive (TTI): < 3.5s
+- Lighthouse Score: > 90
 
-MIT
+---
+
+## ♿ Accessibility
+
+- ✅ Semantic HTML
+- ✅ Keyboard navigation support
+- ✅ Focus indicators
+- ✅ ARIA labels (in progress)
+- ✅ Color contrast (WCAG AA)
+- ✅ Screen reader support
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 🙏 Acknowledgments
+
+- [Next.js](https://nextjs.org/) - The React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Vercel](https://vercel.com/) - Deployment platform
+- Numerology experts for calculation methods
+- Design inspiration from mystical and spiritual themes
+
+---
+
+**Built with ❤️ for seekers of cosmic wisdom**
+
+_Last updated: December 2024_
