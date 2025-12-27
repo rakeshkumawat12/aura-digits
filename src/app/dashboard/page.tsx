@@ -1,27 +1,42 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import type { User } from '@supabase/supabase-js';
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const supabase = createClient();
 
-  // Mock user data
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    memberSince: 'January 2024',
-    mulank: 7,
-    destiny: 5,
-  };
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push('/auth/login');
+        return;
+      }
+
+      setUser(user);
+      setLoading(false);
+    };
+
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Mock saved readings
   const savedReadings = [
     {
       id: 1,
       date: 'Dec 15, 2024',
-      name: 'John Doe',
+      name: user?.user_metadata?.full_name || user?.email || 'User',
       mulank: 7,
       destiny: 5,
     },
@@ -34,6 +49,31 @@ export default function DashboardPage() {
     },
   ];
 
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <main className="min-h-screen pt-20 px-4 py-12 cosmic-bg flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="text-white/70">Loading your dashboard...</p>
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
+
+  const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+  const userEmail = user.email || '';
+  const memberSince = new Date(user.created_at).toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
     <>
       <Navbar />
@@ -44,12 +84,12 @@ export default function DashboardPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="flex items-center gap-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-3xl font-bold text-white">
-                  {user.name.charAt(0)}
+                  {displayName.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-white">{user.name}</h1>
-                  <p className="text-white/60">{user.email}</p>
-                  <p className="text-white/50 text-sm mt-1">Member since {user.memberSince}</p>
+                  <h1 className="text-3xl font-bold text-white">{displayName}</h1>
+                  <p className="text-white/60">{userEmail}</p>
+                  <p className="text-white/50 text-sm mt-1">Member since {memberSince}</p>
                 </div>
               </div>
               <Link href="/calculator" className="btn-secondary">
@@ -103,7 +143,7 @@ export default function DashboardPage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-light rounded-2xl flex items-center justify-center text-2xl font-bold text-white">
-                        {user.mulank}
+                        7
                       </div>
                       <div>
                         <h3 className="font-semibold text-white">Mulank Number</h3>
@@ -113,7 +153,7 @@ export default function DashboardPage() {
 
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary-light rounded-2xl flex items-center justify-center text-2xl font-bold text-white">
-                        {user.destiny}
+                        5
                       </div>
                       <div>
                         <h3 className="font-semibold text-white">Destiny Number</h3>
@@ -145,16 +185,23 @@ export default function DashboardPage() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-white/80">Profile Complete</span>
-                        <span className="text-2xl font-bold text-gradient">85%</span>
+                        <span className="text-2xl font-bold text-gradient">
+                          {user.user_metadata?.full_name ? '100%' : '50%'}
+                        </span>
                       </div>
                       <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-accent-gold to-accent-rose w-5/6"></div>
+                        <div
+                          className="h-full bg-gradient-to-r from-accent-gold to-accent-rose"
+                          style={{ width: user.user_metadata?.full_name ? '100%' : '50%' }}
+                        ></div>
                       </div>
                     </div>
 
                     <div className="pt-4 border-t border-white/10">
                       <p className="text-white/60 text-sm">
-                        Complete your profile to unlock personalized insights and recommendations
+                        {user.user_metadata?.full_name
+                          ? 'Your profile is complete!'
+                          : 'Complete your profile to unlock personalized insights and recommendations'}
                       </p>
                     </div>
                   </div>
@@ -247,7 +294,7 @@ export default function DashboardPage() {
                     <label className="block text-sm font-medium text-white/90">Full Name</label>
                     <input
                       type="text"
-                      defaultValue={user.name}
+                      defaultValue={displayName}
                       className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                   </div>
@@ -256,9 +303,11 @@ export default function DashboardPage() {
                     <label className="block text-sm font-medium text-white/90">Email Address</label>
                     <input
                       type="email"
-                      defaultValue={user.email}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      defaultValue={userEmail}
+                      disabled
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white/50 placeholder-white/40 focus:outline-none cursor-not-allowed"
                     />
+                    <p className="text-xs text-white/50">Email cannot be changed</p>
                   </div>
 
                   <div className="space-y-2">

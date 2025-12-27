@@ -9,51 +9,61 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Mystical teal-bronze palette
         primary: {
-          DEFAULT: '#6B46C1',
-          light: '#805AD5',
-          dark: '#553C9A',
+          DEFAULT: '#0D9488', // Rich teal
+          light: '#14B8A6',
+          dark: '#0F766E',
         },
         secondary: {
-          DEFAULT: '#4299E1',
-          light: '#63B3ED',
-          dark: '#3182CE',
+          DEFAULT: '#B45309', // Deep bronze
+          light: '#D97706',
+          dark: '#92400E',
         },
         accent: {
-          gold: '#F6AD55',
-          rose: '#ED8936',
-          pink: '#ED64A6',
-          purple: '#9F7AEA',
+          amber: '#F59E0B',
+          rose: '#E11D48',
+          violet: '#7C3AED',
+          emerald: '#10B981',
         },
         bg: {
-          primary: '#0A0E27',
-          secondary: '#1A1F3A',
-          tertiary: '#2D3748',
+          primary: '#0A0A0F', // Deep noir
+          secondary: '#13131C',
+          tertiary: '#1C1C28',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['Outfit', 'system-ui', 'sans-serif'],
+        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
       },
       animation: {
-        'float': 'float 3s ease-in-out infinite',
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'twinkle': 'twinkle 2s ease-in-out infinite',
-        'fade-in': 'fade-in 0.5s ease-out',
-        'fade-in-up': 'fade-in-up 0.6s ease-out',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
+        'shimmer': 'shimmer 2.5s linear infinite',
+        'fade-in': 'fade-in 0.8s ease-out',
+        'fade-in-up': 'fade-in-up 0.8s ease-out',
+        'slide-in-left': 'slide-in-left 0.7s ease-out',
+        'scale-in': 'scale-in 0.6s ease-out',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
       },
       keyframes: {
         float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+          '33%': { transform: 'translateY(-15px) rotate(1deg)' },
+          '66%': { transform: 'translateY(-8px) rotate(-1deg)' },
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(107, 70, 193, 0.5)' },
-          '50%': { boxShadow: '0 0 40px rgba(107, 70, 193, 0.8)' },
+          '0%, 100%': {
+            boxShadow: '0 0 20px rgba(13, 148, 136, 0.3), 0 0 40px rgba(13, 148, 136, 0.1)'
+          },
+          '50%': {
+            boxShadow: '0 0 30px rgba(13, 148, 136, 0.5), 0 0 60px rgba(13, 148, 136, 0.2)'
+          },
         },
-        twinkle: {
-          '0%, 100%': { opacity: '0.3' },
-          '50%': { opacity: '1' },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% center' },
+          '100%': { backgroundPosition: '200% center' },
         },
         'fade-in': {
           from: { opacity: '0' },
@@ -62,13 +72,42 @@ const config: Config = {
         'fade-in-up': {
           from: {
             opacity: '0',
-            transform: 'translateY(30px)',
+            transform: 'translateY(40px)',
           },
           to: {
             opacity: '1',
             transform: 'translateY(0)',
           },
         },
+        'slide-in-left': {
+          from: {
+            opacity: '0',
+            transform: 'translateX(-40px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateX(0)',
+          },
+        },
+        'scale-in': {
+          from: {
+            opacity: '0',
+            transform: 'scale(0.9)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'scale(1)',
+          },
+        },
+        'glow-pulse': {
+          '0%, 100%': { filter: 'brightness(1)' },
+          '50%': { filter: 'brightness(1.3)' },
+        },
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'shimmer-gradient': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
       },
     },
   },
