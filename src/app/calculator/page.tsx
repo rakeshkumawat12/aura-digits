@@ -7,7 +7,6 @@ import { Navbar } from '@/components/layout/Navbar';
 export default function CalculatorPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    fullName: '',
     dateOfBirth: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -18,7 +17,6 @@ export default function CalculatorPage() {
 
     // Validation
     const newErrors: Record<string, string> = {};
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
     if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
 
     if (Object.keys(newErrors).length > 0) {
@@ -31,7 +29,6 @@ export default function CalculatorPage() {
     setTimeout(() => {
       // Redirect to results page with query params
       const query = new URLSearchParams({
-        name: formData.fullName,
         dob: formData.dateOfBirth,
       });
       router.push(`/results?${query.toString()}`);
@@ -41,42 +38,19 @@ export default function CalculatorPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 px-4 py-12 cosmic-bg">
+      <main className="min-h-screen pt-20 px-4 py-12 mystical-bg">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+          <div className="text-center mb-12 space-y-6 animate-fade-in-up">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight">
               Numerology Calculator
             </h1>
-            <p className="text-lg text-white/70 max-w-2xl mx-auto">
-              Enter your details below to discover your numerology numbers and unlock insights about your life path
+            <p className="text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
+              Enter your date of birth to discover your numerology numbers and unlock insights about your life path
             </p>
           </div>
 
-          <div className="glass-strong rounded-3xl p-8 md:p-12 space-y-8">
+          <div className="glass-strong rounded-[2rem] p-8 md:p-12 space-y-8 card-glow animate-fade-in-up reveal-1">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label htmlFor="fullName" className="block text-sm font-medium text-white/90">
-                  Full Name
-                  <span className="text-red-400 ml-1">*</span>
-                </label>
-                <input
-                  id="fullName"
-                  type="text"
-                  className={`w-full px-4 py-3 bg-white/5 border ${errors.fullName ? 'border-red-500' : 'border-white/20'} rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all`}
-                  placeholder="Enter your full name"
-                  value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                />
-                {errors.fullName && (
-                  <span className="text-sm text-red-400">{errors.fullName}</span>
-                )}
-                <p className="text-sm text-white/50">
-                  Use your full legal name as it appears on official documents
-                </p>
-              </div>
-
               <div className="space-y-2">
                 <label htmlFor="dateOfBirth" className="block text-sm font-medium text-white/90">
                   Date of Birth
@@ -117,8 +91,8 @@ export default function CalculatorPage() {
               </button>
             </form>
 
-            <div className="border-t border-white/10 pt-8 space-y-4">
-              <h3 className="text-xl font-bold text-white">What You'll Get:</h3>
+            <div className="border-t border-white/10 pt-8 space-y-6">
+              <h3 className="font-display text-2xl font-semibold text-white">What You'll Get:</h3>
               <ul className="space-y-4">
                 <li className="flex gap-4">
                   <span className="text-3xl flex-shrink-0">🔢</span>
