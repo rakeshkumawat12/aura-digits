@@ -11,11 +11,14 @@ import {
 } from '@/utils/numerology';
 import { mulankNumbers } from '@/data/mulankNumbers';
 import { getGridPlaneAnalyses, getMissingNumbers } from '@/data/luShuGridData';
-import {
-  analyzePersonalityFromDOB,
-} from '@/data/personalityGroups';
+import { analyzePersonalityFromDOB } from '@/data/personalityGroups';
 import { calculateLuckyNumbers } from '@/data/numberRelationships';
-import { angelNumbers, getThemeColors, type AngelNumber } from '@/data/angelNumbers';
+import {
+  angelNumbers,
+  getThemeColors,
+  type AngelNumber,
+} from '@/data/angelNumbers';
+import type { SaveReadingRequest, PlaneData } from '@/types/reading';
 
 function ResultsContent() {
   const router = useRouter();
@@ -49,9 +52,136 @@ function ResultsContent() {
   // Angel Numbers modal state
   const [selectedAngel, setSelectedAngel] = useState<AngelNumber | null>(null);
 
+  // Save report state
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  // PDF download state
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
+
+  // Handle PDF download
+  const handleDownloadPDF = async () => {
+    setIsGeneratingPDF(true);
+    setPdfError(null);
+
+    try {
+      // Dynamically import PDF generator to reduce initial bundle size
+      const { generatePDF } = await import('@/utils/pdfGenerator');
+
+      // Generate PDF from the results content
+      await generatePDF('results-content', {
+        filename: `numerology-reading-${new Date(dob).toLocaleDateString().replace(/\//g, '-')}.pdf`,
+        quality: 0.95,
+        scale: 2,
+      });
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setPdfError(error instanceof Error ? error.message : 'Failed to generate PDF');
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
+  // Handle save report
+  const handleSaveReport = async () => {
+    setIsSaving(true);
+    setSaveError(null);
+    setSaveSuccess(false);
+
+    try {
+      // Calculate frequencies for Lu Shu Grid
+      const frequencies: Record<number, number> = {};
+      luShuGrid.forEach((row) => {
+        row.forEach((cell) => {
+          if (cell > 0) {
+            frequencies[cell] = (frequencies[cell] || 0) + 1;
+          }
+        });
+      });
+
+      // Get active planes from gridPlanes
+      const activePlanes: PlaneData[] = [];
+      if (gridPlanes) {
+        Object.entries(gridPlanes).forEach(([, value]) => {
+          const planeData = value as { analysis: { fillPercentage: number; strength: string; isActive: boolean }; name: string; description: string; characteristics: string[] };
+          if (planeData.analysis && planeData.analysis.isActive) {
+            activePlanes.push({
+              name: planeData.name,
+              fillPercentage: planeData.analysis.fillPercentage,
+              strength: planeData.analysis.strength as 'weak' | 'moderate' | 'strong' | 'very-strong',
+              description: planeData.description,
+              characteristics: planeData.characteristics
+            });
+          }
+        });
+      }
+
+      // Prepare the reading data
+      const readingData: SaveReadingRequest = {
+        date_of_birth: dob,
+        mulank,
+        destiny,
+        lu_shu_grid: {
+          grid: luShuGrid,
+          frequencies
+        },
+        personality_analysis: personalityAnalysis ? {
+          dominantGroup: personalityAnalysis.dominantGroup,
+          groupACount: personalityAnalysis.groupACount,
+          groupBCount: personalityAnalysis.groupBCount,
+          number5Count: personalityAnalysis.number5Count,
+          personalityType: personalityAnalysis.personalityType,
+          traits: personalityAnalysis.traits,
+          behaviors: personalityAnalysis.behaviors,
+          description: personalityAnalysis.description
+        } : {
+          dominantGroup: 'balanced',
+          groupACount: 0,
+          groupBCount: 0,
+          number5Count: 0,
+          personalityType: 'Unknown',
+          traits: [],
+          behaviors: [],
+          description: ''
+        },
+        lucky_numbers: luckyNumbers,
+        active_planes: activePlanes.length > 0 ? activePlanes : undefined,
+        missing_numbers: missingNumbers.length > 0 ? {
+          missingNumbers
+        } : undefined,
+        title: `Reading for ${new Date(dob).toLocaleDateString()}`
+      };
+
+      // Call the API
+      const response = await fetch('/api/readings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(readingData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to save reading');
+      }
+
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000); // Hide success message after 3s
+    } catch (error) {
+      console.error('Error saving reading:', error);
+      setSaveError(error instanceof Error ? error.message : 'Failed to save reading');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <main className="min-h-screen pt-20 px-4 py-12 mystical-bg">
-      <div className="max-w-6xl mx-auto space-y-12">
+      <div id="results-content" className="max-w-6xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center space-y-6 animate-fade-in-up">
           <h1 className="font-display text-5xl md:text-7xl font-bold text-white tracking-tight">
@@ -294,7 +424,8 @@ function ResultsContent() {
               Lucky Numbers
             </h2>
             <p className="text-white/60 text-lg max-w-2xl mx-auto">
-              Based on the relationship between your Mulank ({mulank}) and Destiny ({destiny}) numbers
+              Based on the relationship between your Mulank ({mulank}) and
+              Destiny ({destiny}) numbers
             </p>
           </div>
 
@@ -330,7 +461,8 @@ function ResultsContent() {
 
               <div className="border-t border-white/10 pt-4">
                 <p className="text-white/70 text-sm text-center leading-relaxed">
-                  Use these numbers for important decisions, dates, and events for maximum success
+                  Use these numbers for important decisions, dates, and events
+                  for maximum success
                 </p>
               </div>
             </div>
@@ -366,7 +498,8 @@ function ResultsContent() {
 
               <div className="border-t border-white/10 pt-4">
                 <p className="text-white/70 text-sm text-center leading-relaxed">
-                  These numbers have moderate impact and can be used without major concern
+                  These numbers have moderate impact and can be used without
+                  major concern
                 </p>
               </div>
             </div>
@@ -402,7 +535,8 @@ function ResultsContent() {
 
               <div className="border-t border-white/10 pt-4">
                 <p className="text-white/70 text-sm text-center leading-relaxed">
-                  Avoid using these numbers for important life decisions and major events
+                  Avoid using these numbers for important life decisions and
+                  major events
                 </p>
               </div>
             </div>
@@ -417,19 +551,31 @@ function ResultsContent() {
               <div className="grid md:grid-cols-2 gap-4 text-white/70 text-sm">
                 <div className="flex items-start gap-3">
                   <span className="text-primary mt-1">✓</span>
-                  <span>Choose friend numbers for important dates (weddings, business launches, etc.)</span>
+                  <span>
+                    Choose friend numbers for important dates (weddings,
+                    business launches, etc.)
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-primary mt-1">✓</span>
-                  <span>Use friend numbers in phone numbers, addresses, and vehicle registration</span>
+                  <span>
+                    Use friend numbers in phone numbers, addresses, and vehicle
+                    registration
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-primary mt-1">✓</span>
-                  <span>Prefer friend numbers when making financial investments or signing contracts</span>
+                  <span>
+                    Prefer friend numbers when making financial investments or
+                    signing contracts
+                  </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-accent-rose mt-1">✗</span>
-                  <span>Avoid enemy numbers for crucial life decisions and major undertakings</span>
+                  <span>
+                    Avoid enemy numbers for crucial life decisions and major
+                    undertakings
+                  </span>
                 </div>
               </div>
             </div>
@@ -466,130 +612,6 @@ function ResultsContent() {
             that digit in your birth date.
           </p>
         </div>
-
-        {/* Angel Numbers Section */}
-        <div className="glass-strong rounded-[2rem] p-10 md:p-12 space-y-10 card-glow animate-fade-in-up reveal-6">
-          <div className="text-center space-y-4">
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-white tracking-tight">
-              Angel Numbers
-            </h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
-              Have you been seeing repeating numbers on clocks, receipts, or license plates? These aren't coincidences—they're Angel Numbers, gentle messages from the universe guiding your path.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {angelNumbers.map((angel) => {
-              const colors = getThemeColors(angel.theme);
-              return (
-                <button
-                  key={angel.id}
-                  onClick={() => setSelectedAngel(angel)}
-                  className={`glass rounded-2xl p-6 space-y-4 group hover:scale-105 transition-all duration-300 text-left ${colors.hover} ${colors.shadow} hover:shadow-xl`}
-                >
-                  <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center transition-all duration-300`}>
-                    <span className="text-4xl group-hover:scale-110 transition-transform duration-300">{angel.icon}</span>
-                  </div>
-
-                  <div className="text-center space-y-2">
-                    <h3 className="font-display text-xl font-semibold text-white">
-                      {angel.patterns}
-                    </h3>
-                    <div className={`inline-block px-3 py-1 rounded-full ${colors.bg} border ${colors.border}`}>
-                      <span className="text-white/90 text-xs font-medium uppercase tracking-wider">
-                        {angel.keyword}
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-white/70 text-center text-sm leading-relaxed">
-                    {angel.title}
-                  </p>
-
-                  <div className="text-center pt-2">
-                    <span className="text-white/60 text-xs uppercase tracking-wider">
-                      Tap to reveal message
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Angel Number Modal */}
-        {selectedAngel && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
-            onClick={() => setSelectedAngel(null)}
-          >
-            <div
-              className="glass-strong rounded-[2rem] p-8 md:p-12 max-w-2xl w-full space-y-6 card-glow animate-scale-in"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedAngel(null)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-full glass hover:bg-white/20 flex items-center justify-center transition-all duration-300 group"
-                aria-label="Close modal"
-              >
-                <span className="text-white/60 group-hover:text-white text-2xl">×</span>
-              </button>
-
-              {/* Icon and Number */}
-              <div className="text-center space-y-4">
-                <div className={`w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br ${getThemeColors(selectedAngel.theme).gradient} border-2 ${getThemeColors(selectedAngel.theme).border} flex items-center justify-center animate-pulse-slow`}>
-                  <span className="text-6xl">{selectedAngel.icon}</span>
-                </div>
-                <h3 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">
-                  {selectedAngel.patterns}
-                </h3>
-                <div className={`inline-block px-4 py-2 rounded-full ${getThemeColors(selectedAngel.theme).bg} border ${getThemeColors(selectedAngel.theme).border}`}>
-                  <span className="text-white font-medium uppercase tracking-wider text-sm">
-                    {selectedAngel.keyword}
-                  </span>
-                </div>
-              </div>
-
-              {/* Title */}
-              <div className="text-center">
-                <h4 className="font-display text-2xl font-semibold text-white">
-                  {selectedAngel.title}
-                </h4>
-              </div>
-
-              {/* Explanation */}
-              <div className="glass rounded-xl p-6 space-y-4">
-                <p className="text-white/80 text-lg leading-relaxed text-center">
-                  {selectedAngel.explanation}
-                </p>
-              </div>
-
-              {/* Action Prompt */}
-              <div className={`glass rounded-xl p-6 border-2 ${getThemeColors(selectedAngel.theme).border} ${getThemeColors(selectedAngel.theme).bg}`}>
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl flex-shrink-0">💫</span>
-                  <div className="flex-1">
-                    <h5 className="text-white font-semibold mb-2">Your Action Step</h5>
-                    <p className="text-white/90 leading-relaxed">
-                      {selectedAngel.action}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Close Button at Bottom */}
-              <div className="text-center pt-4">
-                <button
-                  onClick={() => setSelectedAngel(null)}
-                  className="btn-outline text-lg px-8"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Active Planes Analysis */}
         {gridPlanes && (
@@ -701,17 +723,211 @@ function ResultsContent() {
           </div>
         )}
 
+        {/* Angel Numbers Section */}
+        <div className="glass-strong rounded-[2rem] p-10 md:p-12 space-y-10 card-glow animate-fade-in-up reveal-6">
+          <div className="text-center space-y-4">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-white tracking-tight">
+              Angel Numbers
+            </h2>
+            <p className="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
+              Have you been seeing repeating numbers on clocks, receipts, or
+              license plates? These aren't coincidences—they're Angel Numbers,
+              gentle messages from the universe guiding your path.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {angelNumbers.map((angel) => {
+              const colors = getThemeColors(angel.theme);
+              return (
+                <button
+                  key={angel.id}
+                  onClick={() => setSelectedAngel(angel)}
+                  className={`glass rounded-2xl p-6 space-y-4 group hover:scale-105 transition-all duration-300 text-left ${colors.hover} ${colors.shadow} hover:shadow-xl`}
+                >
+                  <div
+                    className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center transition-all duration-300`}
+                  >
+                    <span className="text-4xl group-hover:scale-110 transition-transform duration-300">
+                      {angel.icon}
+                    </span>
+                  </div>
+
+                  <div className="text-center space-y-2">
+                    <h3 className="font-display text-xl font-semibold text-white">
+                      {angel.patterns}
+                    </h3>
+                    <div
+                      className={`inline-block px-3 py-1 rounded-full ${colors.bg} border ${colors.border}`}
+                    >
+                      <span className="text-white/90 text-xs font-medium uppercase tracking-wider">
+                        {angel.keyword}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-white/70 text-center text-sm leading-relaxed">
+                    {angel.title}
+                  </p>
+
+                  <div className="text-center pt-2">
+                    <span className="text-white/60 text-xs uppercase tracking-wider">
+                      Tap to reveal message
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Angel Number Modal */}
+        {selectedAngel && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
+            onClick={() => setSelectedAngel(null)}
+          >
+            <div
+              className="glass-strong rounded-[2rem] p-8 md:p-12 max-w-2xl w-full space-y-6 card-glow animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedAngel(null)}
+                className="absolute top-4 right-4 w-10 h-10 rounded-full glass hover:bg-white/20 flex items-center justify-center transition-all duration-300 group"
+                aria-label="Close modal"
+              >
+                <span className="text-white/60 group-hover:text-white text-2xl">
+                  ×
+                </span>
+              </button>
+
+              {/* Icon and Number */}
+              <div className="text-center space-y-4">
+                <div
+                  className={`w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br ${getThemeColors(selectedAngel.theme).gradient} border-2 ${getThemeColors(selectedAngel.theme).border} flex items-center justify-center animate-pulse-slow`}
+                >
+                  <span className="text-6xl">{selectedAngel.icon}</span>
+                </div>
+                <h3 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">
+                  {selectedAngel.patterns}
+                </h3>
+                <div
+                  className={`inline-block px-4 py-2 rounded-full ${getThemeColors(selectedAngel.theme).bg} border ${getThemeColors(selectedAngel.theme).border}`}
+                >
+                  <span className="text-white font-medium uppercase tracking-wider text-sm">
+                    {selectedAngel.keyword}
+                  </span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <div className="text-center">
+                <h4 className="font-display text-2xl font-semibold text-white">
+                  {selectedAngel.title}
+                </h4>
+              </div>
+
+              {/* Explanation */}
+              <div className="glass rounded-xl p-6 space-y-4">
+                <p className="text-white/80 text-lg leading-relaxed text-center">
+                  {selectedAngel.explanation}
+                </p>
+              </div>
+
+              {/* Action Prompt */}
+              <div
+                className={`glass rounded-xl p-6 border-2 ${getThemeColors(selectedAngel.theme).border} ${getThemeColors(selectedAngel.theme).bg}`}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl flex-shrink-0">💫</span>
+                  <div className="flex-1">
+                    <h5 className="text-white font-semibold mb-2">
+                      Your Action Step
+                    </h5>
+                    <p className="text-white/90 leading-relaxed">
+                      {selectedAngel.action}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Close Button at Bottom */}
+              <div className="text-center pt-4">
+                <button
+                  onClick={() => setSelectedAngel(null)}
+                  className="btn-outline text-lg px-8"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Disclaimer */}
         <div className="glass rounded-2xl p-8 text-center space-y-3 animate-fade-in-up reveal-9">
           <p className="text-white/80 text-lg leading-relaxed max-w-3xl mx-auto">
-            These insights are based on your unique numerological profile. If something doesn't seem to fit right now, don't worry. Sometimes, it takes time for things to make sense. Trust your journey and stay positive!
+            These insights are based on your unique numerological profile. If
+            something doesn't seem to fit right now, don't worry. Sometimes, it
+            takes time for things to make sense. Trust your journey and stay
+            positive!
           </p>
         </div>
 
+        {/* Save Success/Error Messages */}
+        {saveSuccess && (
+          <div className="glass rounded-2xl p-6 text-center border-2 border-emerald-500/50 bg-emerald-500/10 animate-fade-in">
+            <p className="text-emerald-400 text-lg font-semibold">
+              ✓ Reading saved successfully!
+            </p>
+          </div>
+        )}
+        {saveError && (
+          <div className="glass rounded-2xl p-6 text-center border-2 border-red-500/50 bg-red-500/10 animate-fade-in">
+            <p className="text-red-400 text-lg font-semibold">
+              ✗ {saveError}
+            </p>
+          </div>
+        )}
+        {pdfError && (
+          <div className="glass rounded-2xl p-6 text-center border-2 border-red-500/50 bg-red-500/10 animate-fade-in">
+            <p className="text-red-400 text-lg font-semibold">
+              ✗ {pdfError}
+            </p>
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-6 justify-center animate-fade-in-up reveal-9">
-          <button className="btn-primary text-lg">Save Report</button>
-          <button className="btn-secondary text-lg">Download PDF</button>
+          <button
+            onClick={handleSaveReport}
+            disabled={isSaving}
+            className="btn-primary text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSaving ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                Saving...
+              </span>
+            ) : (
+              'Save Report'
+            )}
+          </button>
+          <button
+            onClick={handleDownloadPDF}
+            disabled={isGeneratingPDF}
+            className="btn-secondary text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isGeneratingPDF ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                Generating PDF...
+              </span>
+            ) : (
+              'Download PDF'
+            )}
+          </button>
           <button
             onClick={() => router.push('/calculator')}
             className="btn-outline text-lg"

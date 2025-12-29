@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
+import { DateField, DateInput } from '@/components/ui/datefield';
+import { Label } from '@/components/ui/field';
+import { parseDate } from '@internationalized/date';
 
 export default function CalculatorPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    dateOfBirth: '',
-  });
+  const [dateValue, setDateValue] = useState<any>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isCalculating, setIsCalculating] = useState(false);
 
@@ -17,19 +18,24 @@ export default function CalculatorPage() {
 
     // Validation
     const newErrors: Record<string, string> = {};
-    if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
+    if (!dateValue) {
+      newErrors.dateOfBirth = 'Date of birth is required';
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
+    // Convert DateValue to string format (YYYY-MM-DD)
+    const dobString = `${dateValue.year}-${String(dateValue.month).padStart(2, '0')}-${String(dateValue.day).padStart(2, '0')}`;
+
     // Simulate calculation
     setIsCalculating(true);
     setTimeout(() => {
       // Redirect to results page with query params
       const query = new URLSearchParams({
-        dob: formData.dateOfBirth,
+        dob: dobString,
       });
       router.push(`/results?${query.toString()}`);
     }, 1500);
@@ -51,20 +57,18 @@ export default function CalculatorPage() {
 
           <div className="glass-strong rounded-[2rem] p-8 md:p-12 space-y-8 card-glow animate-fade-in-up reveal-1">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-white/90">
-                  Date of Birth
-                  <span className="text-red-400 ml-1">*</span>
-                </label>
-                <input
-                  id="dateOfBirth"
-                  type="date"
-                  className={`w-full px-4 py-3 bg-white/5 border ${errors.dateOfBirth ? 'border-red-500' : 'border-white/20'} rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all`}
-                  value={formData.dateOfBirth}
-                  onChange={(e) =>
-                    setFormData({ ...formData, dateOfBirth: e.target.value })
-                  }
-                />
+              <div className="space-y-3">
+                <DateField
+                  className="w-full space-y-2"
+                  value={dateValue}
+                  onChange={setDateValue}
+                  isInvalid={!!errors.dateOfBirth}
+                >
+                  <Label className="text-white/90">
+                    Date of Birth <span className="text-red-400 ml-1">*</span>
+                  </Label>
+                  <DateInput className="w-full bg-white/5 border-white/20 text-white hover:bg-white/10 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary" />
+                </DateField>
                 {errors.dateOfBirth && (
                   <span className="text-sm text-red-400">{errors.dateOfBirth}</span>
                 )}

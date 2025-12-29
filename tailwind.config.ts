@@ -14,22 +14,48 @@ const config: Config = {
           DEFAULT: '#0D9488', // Rich teal
           light: '#14B8A6',
           dark: '#0F766E',
+          foreground: '#ffffff',
         },
         secondary: {
           DEFAULT: '#B45309', // Deep bronze
           light: '#D97706',
           dark: '#92400E',
+          foreground: '#ffffff',
         },
         accent: {
+          DEFAULT: '#0D9488',
           amber: '#F59E0B',
           rose: '#E11D48',
           violet: '#7C3AED',
           emerald: '#10B981',
+          foreground: '#ffffff',
         },
         bg: {
           primary: '#0A0A0F', // Deep noir
           secondary: '#13131C',
           tertiary: '#1C1C28',
+        },
+        // Shadcn/UI compatible colors
+        background: '#0A0A0F',
+        foreground: '#ffffff',
+        muted: {
+          DEFAULT: '#1C1C28',
+          foreground: '#94a3b8',
+        },
+        card: {
+          DEFAULT: '#13131C',
+          foreground: '#ffffff',
+        },
+        popover: {
+          DEFAULT: '#13131C',
+          foreground: '#ffffff',
+        },
+        border: 'rgba(255, 255, 255, 0.1)',
+        input: 'rgba(255, 255, 255, 0.15)',
+        ring: '#0D9488',
+        destructive: {
+          DEFAULT: '#E11D48',
+          foreground: '#ffffff',
         },
       },
       fontFamily: {

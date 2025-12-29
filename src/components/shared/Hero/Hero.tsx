@@ -1,86 +1,107 @@
+'use client';
+
 import Link from 'next/link';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 export function Hero() {
+  const [particles, setParticles] = useState<
+    Array<{
+      left: string;
+      top: string;
+      delay: string;
+      duration: string;
+      opacity: number;
+    }>
+  >([]);
+
+  useEffect(() => {
+    // Generate particles on client-side only to avoid hydration mismatch
+    const generatedParticles = [...Array(40)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 5}s`,
+      duration: `${3 + Math.random() * 4}s`,
+      opacity: 0.2 + Math.random() * 0.5,
+    }));
+    setParticles(generatedParticles);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Animated Stars Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
-        {[...Array(60)].map((_, i) => (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Full-width Background with Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-bg-primary via-bg-secondary to-bg-primary">
+        {/* Subtle depth effect overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
+      </div>
+
+      {/* Rotating Sign Circle */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="relative w-full h-full max-w-4xl mx-auto flex items-center justify-center">
+          {/* SignCircle.png with rotation animation */}
+          <div className="relative w-[400px] h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] animate-spin-slow opacity-30">
+            <Image
+              src="/images/SignCircle.png"
+              alt="Zodiac Circle"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-20 max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 py-24 text-center">
+        {/* Main Heading */}
+        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight animate-fade-in-up mb-8">
+          Unlock Your Life's
+          <br />
+          <span className="text-gradient inline-block mt-2">
+            Hidden Numbers
+          </span>
+        </h1>
+
+        {/* Subheading */}
+        <p
+          className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed font-light animate-fade-in-up mb-12"
+          style={{ animationDelay: '0.2s' }}
+        >
+          Discover the ancient wisdom of numerology through your date of birth.
+          Unveil your Mulank, Destiny Number, and Lu Shu Grid to understand your
+          true potential and life purpose.
+        </p>
+
+        {/* CTA Button */}
+        <div
+          className="flex justify-center items-center animate-fade-in-up"
+          style={{ animationDelay: '0.4s' }}
+        >
+          <Link
+            href="/calculator"
+            className="btn-primary inline-flex items-center justify-center gap-3 text-lg px-10 py-4 shadow-[0_0_30px_rgba(13,148,136,0.3)] hover:shadow-[0_0_40px_rgba(13,148,136,0.5)] transition-all duration-300"
+          >
+            Reveal
+            {/* <span className="text-2xl">✨</span> */}
+          </Link>
+        </div>
+      </div>
+
+      {/* Background ambient particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+        {particles.map((particle, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-primary rounded-full"
+            className="absolute w-1 h-1 bg-primary rounded-full animate-float"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 3}s`,
-              opacity: 0.3 + Math.random() * 0.7,
+              left: particle.left,
+              top: particle.top,
+              animationDelay: particle.delay,
+              animationDuration: particle.duration,
+              opacity: particle.opacity,
             }}
           />
         ))}
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="text-center lg:text-left space-y-10">
-            {/* Main Heading */}
-            <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight animate-fade-in-up">
-              Discover Your Life Path
-              <br />
-              <span className="text-gradient inline-block mt-2">Through Numerology</span>
-            </h1>
-
-            {/* Subheading */}
-            <p className="text-xl md:text-2xl text-white/75 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light animate-fade-in-up reveal-2">
-              Unlock the secrets hidden in your name and birth date. Explore your
-              Mulank, Destiny Number, and Lu Shu Grid to understand your true
-              potential and life purpose.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start pt-4 animate-fade-in-up reveal-3">
-              <Link href="/calculator" className="btn-primary inline-flex items-center justify-center gap-3 text-lg">
-                Calculate Your Numbers
-                <span className="text-2xl">✨</span>
-              </Link>
-              <Link href="/about" className="btn-outline inline-flex items-center justify-center gap-3 text-lg">
-                Learn How It Works
-                <span className="text-xl">→</span>
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-12 animate-fade-in-up reveal-4">
-              <div className="text-center lg:text-left">
-                <div className="font-display text-4xl md:text-5xl font-bold text-gradient mb-2">10K+</div>
-                <div className="text-sm text-white/60 tracking-wide">Readings Generated</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="font-display text-4xl md:text-5xl font-bold text-gradient mb-2">98%</div>
-                <div className="text-sm text-white/60 tracking-wide">Accuracy Rate</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="font-display text-4xl md:text-5xl font-bold text-gradient mb-2">5K+</div>
-                <div className="text-sm text-white/60 tracking-wide">Happy Users</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Hero Visual - Atmospheric Orbs */}
-          <div className="relative hidden lg:flex items-center justify-center h-[600px]">
-            <div className="absolute w-96 h-96 bg-gradient-to-br from-primary/30 via-accent-emerald/20 to-transparent rounded-full blur-3xl animate-float"></div>
-            <div className="absolute w-80 h-80 bg-gradient-to-br from-secondary/30 via-accent-amber/20 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-            <div className="absolute w-72 h-72 bg-gradient-to-br from-accent-violet/25 via-accent-rose/15 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
-
-            {/* Geometric overlay */}
-            <div className="relative glass-strong rounded-[3rem] p-16 w-[400px] h-[400px] flex items-center justify-center animate-scale-in">
-              <div className="text-center space-y-4">
-                <div className="font-display text-8xl font-bold text-gradient">108</div>
-                <p className="text-white/60 text-sm tracking-widest uppercase">Sacred Number</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

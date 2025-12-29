@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -10,13 +11,16 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const supabase = createClient();
   const router = useRouter();
 
   useEffect(() => {
     // Get initial user
     const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       setUser(user);
       setLoading(false);
     };
@@ -24,16 +28,29 @@ export function Navbar() {
     getUser();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
-    return () => subscription.unsubscribe();
+    // Handle scroll effect
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [supabase.auth]);
 
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
+      setIsMenuOpen(false);
       router.push('/');
       router.refresh();
     } catch (error) {
@@ -42,136 +59,204 @@ export function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <span className="text-3xl group-hover:animate-float">✨</span>
-            <span className="font-display text-3xl font-bold text-gradient hover:opacity-90 transition-opacity">
-              Aura Digits
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-10">
-            <Link href="/" className="text-white/70 hover:text-white transition-all duration-300 font-medium text-lg relative group">
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link href="/calculator" className="text-white/70 hover:text-white transition-all duration-300 font-medium text-lg relative group">
-              Calculator
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link href="/about" className="text-white/70 hover:text-white transition-all duration-300 font-medium text-lg relative group">
-              About
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-            <Link href="/blog" className="text-white/70 hover:text-white transition-all duration-300 font-medium text-lg relative group">
-              Blog
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
-            </Link>
-          </div>
-
-          {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-6">
-            {loading ? (
-              <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-            ) : user ? (
-              <>
-                <Link
-                  href="/dashboard"
-                  className="text-white/70 hover:text-white transition-all duration-300 font-medium px-4 py-2.5"
-                >
-                  Dashboard
-                </Link>
-                <div className="flex items-center gap-4">
-                  <span className="text-white/70 font-medium">
-                    {user.user_metadata?.full_name || user.email}
-                  </span>
-                  <button
-                    onClick={handleSignOut}
-                    className="text-white/80 hover:text-white transition-all duration-300 font-medium px-5 py-2.5 border-2 border-white/20 rounded-xl hover:bg-white/10 hover:border-primary/50"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link href="/auth/login" className="text-white/70 hover:text-white transition-all duration-300 font-medium px-5 py-2.5">
-                  Login
-                </Link>
-                <Link href="/auth/signup" className="bg-gradient-to-r from-primary via-primary-light to-primary text-white font-semibold px-7 py-3 rounded-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/40 bg-[length:200%_100%] hover:bg-right">
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden flex flex-col space-y-1.5 p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+    <>
+      {/* Floating Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+        <div className="max-w-5xl mx-auto">
+          <div
+            className={`
+              floating-navbar
+              ${isScrolled ? 'floating-navbar-scrolled' : ''}
+              transition-all duration-300
+            `}
           >
-            <span className="w-6 h-0.5 bg-white rounded-full transition-all"></span>
-            <span className="w-6 h-0.5 bg-white rounded-full transition-all"></span>
-            <span className="w-6 h-0.5 bg-white rounded-full transition-all"></span>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden glass-strong border-t border-white/10 animate-fade-in-up">
-          <div className="px-4 py-4 space-y-3">
-            <Link href="/" className="block text-white/80 hover:text-white transition-colors font-medium py-2">
-              Home
-            </Link>
-            <Link href="/calculator" className="block text-white/80 hover:text-white transition-colors font-medium py-2">
-              Calculator
-            </Link>
-            <Link href="/about" className="block text-white/80 hover:text-white transition-colors font-medium py-2">
-              About
-            </Link>
-            <Link href="/blog" className="block text-white/80 hover:text-white transition-colors font-medium py-2">
-              Blog
-            </Link>
-            <div className="border-t border-white/10 my-2"></div>
-
-            {loading ? (
-              <div className="flex justify-center py-2">
-                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            ) : user ? (
-              <>
-                <div className="text-white/80 text-sm py-2">
-                  {user.user_metadata?.full_name || user.email}
+            <div className="flex items-center justify-between h-16 px-6">
+              {/* Logo */}
+              <Link
+                href="/"
+                className="flex items-center space-x-3 group flex-shrink-0"
+              >
+                <div className="relative w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform duration-300">
+                  <Image
+                    src="/images/auradigitsLogo.png"
+                    alt="Aura Digits Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
                 </div>
-                <Link href="/dashboard" className="block text-white/80 hover:text-white transition-colors font-medium py-2">
-                  Dashboard
+              </Link>
+
+              {/* Desktop Navigation */}
+              <div className="hidden lg:flex items-center space-x-8">
+                <Link href="/" className="nav-link">
+                  Home
                 </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="block w-full text-left text-white/80 hover:text-white transition-colors font-medium py-2"
+                <Link href="/calculator" className="nav-link">
+                  Calculator
+                </Link>
+                <Link href="/about" className="nav-link">
+                  About
+                </Link>
+                <Link href="/blog" className="nav-link">
+                  Blog
+                </Link>
+              </div>
+
+              {/* Desktop Auth Buttons */}
+              <div className="hidden lg:flex items-center space-x-4 flex-shrink-0">
+                {loading ? (
+                  <div className="w-6 h-6 border-2 border-primary/50 border-t-primary rounded-full animate-spin"></div>
+                ) : user ? (
+                  <>
+                    <Link href="/dashboard" className="nav-link">
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="text-sm font-medium text-white/70 hover:text-white px-4 py-2 rounded-lg hover:bg-white/5 transition-all duration-300"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/auth/login"
+                      className="text-sm font-medium text-white/70 hover:text-white px-4 py-2 rounded-lg hover:bg-white/5 transition-all duration-300"
+                    >
+                      Login
+                    </Link>
+                    <Link href="/auth/signup" className="btn-nav-primary">
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="lg:hidden p-2 rounded-lg hover:bg-white/5 transition-colors"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                <div className="w-5 h-5 flex flex-col justify-center items-center gap-1">
+                  <span
+                    className={`w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                      isMenuOpen ? 'rotate-45 translate-y-1.5' : ''
+                    }`}
+                  ></span>
+                  <span
+                    className={`w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                      isMenuOpen ? 'opacity-0' : ''
+                    }`}
+                  ></span>
+                  <span
+                    className={`w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                      isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
+                    }`}
+                  ></span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden animate-fade-in"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className="absolute top-24 left-4 right-4 max-w-md mx-auto floating-navbar animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 space-y-4">
+              {/* Mobile Navigation Links */}
+              <div className="space-y-2">
+                <Link
+                  href="/"
+                  className="mobile-nav-link"
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link href="/auth/login" className="block text-white/80 hover:text-white transition-colors font-medium py-2">
-                  Login
+                  Home
                 </Link>
-                <Link href="/auth/signup" className="block bg-gradient-to-r from-primary to-secondary text-white font-semibold px-6 py-2 rounded-lg text-center">
-                  Sign Up
+                <Link
+                  href="/calculator"
+                  className="mobile-nav-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Calculator
                 </Link>
-              </>
-            )}
+                <Link
+                  href="/about"
+                  className="mobile-nav-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link
+                  href="/blog"
+                  className="mobile-nav-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Blog
+                </Link>
+              </div>
+
+              {/* Divider */}
+              <div className="border-t border-white/10"></div>
+
+              {/* Mobile Auth Section */}
+              <div className="space-y-3">
+                {loading ? (
+                  <div className="flex justify-center py-2">
+                    <div className="w-6 h-6 border-2 border-primary/50 border-t-primary rounded-full animate-spin"></div>
+                  </div>
+                ) : user ? (
+                  <>
+                    <div className="text-sm text-white/60 px-4 py-2">
+                      {user.user_metadata?.full_name || user.email}
+                    </div>
+                    <Link
+                      href="/dashboard"
+                      className="mobile-nav-link"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="mobile-nav-link w-full text-left"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/auth/login"
+                      className="mobile-nav-link"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/auth/signup"
+                      className="btn-nav-primary w-full text-center"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }

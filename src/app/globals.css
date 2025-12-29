@@ -74,6 +74,47 @@
 }
 
 @layer components {
+  /* Floating Navbar */
+  .floating-navbar {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .floating-navbar-scrolled {
+    @apply bg-white/10 border-white/20 shadow-xl;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  }
+
+  /* Navigation Links */
+  .nav-link {
+    @apply text-sm font-medium text-white/70 hover:text-white transition-all duration-300 relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Mobile Navigation Links */
+  .mobile-nav-link {
+    @apply block w-full text-left text-white/80 hover:text-white hover:bg-white/5 font-medium px-4 py-3 rounded-lg transition-all duration-300;
+  }
+
+  /* Primary Button for Nav */
+  .btn-nav-primary {
+    @apply text-sm font-semibold px-5 py-2.5 rounded-lg bg-gradient-to-r from-primary to-primary-light text-white transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5;
+  }
+
   .text-gradient {
     @apply bg-gradient-to-br from-primary via-accent-emerald to-secondary bg-clip-text text-transparent;
     background-size: 200% 200%;
@@ -167,10 +208,19 @@
 
 @layer utilities {
   .mystical-bg {
-    background:
+    background-color: #0A0A0F;
+    background-image:
       radial-gradient(ellipse 70% 40% at 30% 20%, rgba(13, 148, 136, 0.12), transparent),
       radial-gradient(ellipse 60% 50% at 80% 60%, rgba(180, 83, 9, 0.08), transparent),
       radial-gradient(ellipse 50% 60% at 50% 100%, rgba(124, 58, 237, 0.06), transparent);
+  }
+
+  .cosmic-bg {
+    background-color: #0A0A0F;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(13, 148, 136, 0.15), transparent),
+      radial-gradient(ellipse 60% 50% at 0% 100%, rgba(180, 83, 9, 0.1), transparent),
+      radial-gradient(ellipse 60% 50% at 100% 100%, rgba(124, 58, 237, 0.08), transparent);
   }
 
   .reveal-1 { animation-delay: 0.1s; }
@@ -327,4 +377,71 @@ form {
   50% {
     background-position: 100% 50%;
   }
+}
+
+/* Orbital animations for hero celestial elements */
+@keyframes orbit-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-medium {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-fast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-fastest {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-orbit-slow {
+  animation: orbit-slow 40s linear infinite;
+}
+
+.animate-orbit-medium {
+  animation: orbit-medium 30s linear infinite;
+}
+
+.animate-orbit-fast {
+  animation: orbit-fast 20s linear infinite;
+}
+
+.animate-orbit-fastest {
+  animation: orbit-fastest 15s linear infinite;
+}
+
+/* Slow spin animation for sign circle */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 60s linear infinite;
 }

@@ -6,11 +6,15 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
+import type { Reading } from '@/types/reading';
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [savedReadings, setSavedReadings] = useState<Reading[]>([]);
+  const [loadingReadings, setLoadingReadings] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -31,23 +35,55 @@ export default function DashboardPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Mock saved readings
-  const savedReadings = [
-    {
-      id: 1,
-      date: 'Dec 15, 2024',
-      name: user?.user_metadata?.full_name || user?.email || 'User',
-      mulank: 7,
-      destiny: 5,
-    },
-    {
-      id: 2,
-      date: 'Nov 28, 2024',
-      name: 'Jane Smith',
-      mulank: 3,
-      destiny: 8,
-    },
-  ];
+  // Fetch saved readings when readings tab is active
+  useEffect(() => {
+    if (activeTab === 'readings' && user) {
+      fetchReadings();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, user]);
+
+  const fetchReadings = async () => {
+    setLoadingReadings(true);
+    try {
+      const response = await fetch('/api/readings');
+      const result = await response.json();
+
+      if (result.success && result.readings) {
+        setSavedReadings(result.readings);
+      }
+    } catch (error) {
+      console.error('Error fetching readings:', error);
+    } finally {
+      setLoadingReadings(false);
+    }
+  };
+
+  const handleDeleteReading = async (readingId: string) => {
+    if (!confirm('Are you sure you want to delete this reading?')) {
+      return;
+    }
+
+    setDeleteLoading(readingId);
+    try {
+      const response = await fetch(`/api/readings/${readingId}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSavedReadings(savedReadings.filter(r => r.id !== readingId));
+      } else {
+        alert('Failed to delete reading');
+      }
+    } catch (error) {
+      console.error('Error deleting reading:', error);
+      alert('Failed to delete reading');
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -241,7 +277,12 @@ export default function DashboardPage() {
               <div className="glass-strong rounded-3xl p-8">
                 <h2 className="text-2xl font-bold text-white mb-6">Saved Readings</h2>
 
-                {savedReadings.length === 0 ? (
+                {loadingReadings ? (
+                  <div className="text-center py-12">
+                    <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="text-white/60 mt-4">Loading your readings...</p>
+                  </div>
+                ) : savedReadings.length === 0 ? (
                   <div className="text-center py-12 space-y-4">
                     <p className="text-white/60">No saved readings yet</p>
                     <Link href="/calculator" className="btn-primary inline-block">
@@ -256,8 +297,16 @@ export default function DashboardPage() {
                         className="glass rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 space-y-4"
                       >
                         <div className="flex items-center justify-between">
-                          <h3 className="text-xl font-bold text-white">{reading.name}</h3>
-                          <span className="text-white/50 text-sm">{reading.date}</span>
+                          <h3 className="text-lg font-bold text-white">
+                            {reading.title || `Reading for ${new Date(reading.date_of_birth).toLocaleDateString()}`}
+                          </h3>
+                          <span className="text-white/50 text-sm">
+                            {new Date(reading.created_at).toLocaleDateString()}
+                          </span>
+                        </div>
+
+                        <div className="text-white/70 text-sm">
+                          DOB: {new Date(reading.date_of_birth).toLocaleDateString()}
                         </div>
 
                         <div className="flex gap-4">
@@ -272,8 +321,23 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="flex gap-3 pt-4">
-                          <button className="flex-1 btn-outline text-sm py-2">View</button>
-                          <button className="flex-1 btn-primary text-sm py-2">Download</button>
+                          <Link
+                            href={`/reading/${reading.id}`}
+                            className="flex-1 btn-outline text-sm py-2 text-center"
+                          >
+                            View Details
+                          </Link>
+                          <button
+                            onClick={() => handleDeleteReading(reading.id)}
+                            disabled={deleteLoading === reading.id}
+                            className="btn-outline text-red-400 border-red-400/30 hover:bg-red-500/10 disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm py-2"
+                          >
+                            {deleteLoading === reading.id ? (
+                              <span className="w-5 h-5 border-2 border-red-400/30 border-t-red-400 rounded-full animate-spin inline-block"></span>
+                            ) : (
+                              '🗑️'
+                            )}
+                          </button>
                         </div>
                       </div>
                     ))}
