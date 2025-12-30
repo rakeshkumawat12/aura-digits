@@ -141,12 +141,12 @@ const CircularUI = ({ label, circles, className }: CircularUIProps) => (
                 {circles.map((circle, i) => (
                     <div
                         key={i}
-                        className={cn('size-7 rounded-full border sm:size-8', {
-                            'border-primary': circle.pattern === 'none',
-                            'border-primary bg-[repeating-linear-gradient(-45deg,rgba(255,255,255,0.1),rgba(255,255,255,0.1)_1px,transparent_1px,transparent_4px)]': circle.pattern === 'border',
-                            'border-primary bg-bg-primary bg-[repeating-linear-gradient(-45deg,#0D9488,#0D9488_1px,transparent_1px,transparent_4px)]': circle.pattern === 'primary',
-                            'bg-bg-primary z-1 border-primary bg-[repeating-linear-gradient(-45deg,#14B8A6,#14B8A6_1px,transparent_1px,transparent_4px)]': circle.pattern === 'teal',
-                        })}></div>
+                        className={cn('size-7 rounded-full border sm:size-8',
+                            circle.pattern === 'none' && 'border-primary',
+                            circle.pattern === 'border' && 'border-primary bg-[repeating-linear-gradient(-45deg,rgba(255,255,255,0.1),rgba(255,255,255,0.1)_1px,transparent_1px,transparent_4px)]',
+                            circle.pattern === 'primary' && 'border-primary bg-bg-primary bg-[repeating-linear-gradient(-45deg,#0D9488,#0D9488_1px,transparent_1px,transparent_4px)]',
+                            circle.pattern === 'teal' && 'bg-bg-primary z-1 border-primary bg-[repeating-linear-gradient(-45deg,#14B8A6,#14B8A6_1px,transparent_1px,transparent_4px)]'
+                        )}></div>
                 ))}
             </div>
         </div>

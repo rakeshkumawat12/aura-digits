@@ -40,7 +40,9 @@ function FormDescription({ className, ...props }: AriaTextProps) {
 function FieldError({ className, ...props }: AriaFieldErrorProps) {
   return (
     <AriaFieldError
-      className={cn("text-sm font-medium text-destructive", className)}
+      className={composeRenderProps(className, (className) =>
+        cn("text-sm font-medium text-destructive", className)
+      )}
       {...props}
     />
   )

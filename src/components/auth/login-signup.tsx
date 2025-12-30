@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import {
   Card,
@@ -78,7 +79,7 @@ export default function LoginSignupSection() {
         router.push("/");
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       setErrors({ general: "An unexpected error occurred" });
       setIsLoading(false);
     }
@@ -233,10 +234,10 @@ export default function LoginSignupSection() {
 
       {/* Header */}
       <header className="absolute left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-5 border-b border-white/[0.08]">
-        <a href="/" className="text-xs tracking-[0.14em] uppercase text-white/60 hover:text-primary transition-colors font-medium">
+        <Link href="/" className="text-xs tracking-[0.14em] uppercase text-white/60 hover:text-primary transition-colors font-medium">
           AURA DIGITS
-        </a>
-        <a href="/" className="relative z-50">
+        </Link>
+        <Link href="/" className="relative z-50">
           <Button
             variant="outline"
             className="h-9 rounded-lg border-white/[0.15] bg-white/[0.03] text-white/80 hover:bg-white/[0.08] hover:text-white hover:border-primary/40 transition-all"
@@ -244,7 +245,7 @@ export default function LoginSignupSection() {
             <span className="mr-2 text-sm">Home</span>
             <ArrowRight className="h-4 w-4" />
           </Button>
-        </a>
+        </Link>
       </header>
 
       {/* Centered Login Card */}

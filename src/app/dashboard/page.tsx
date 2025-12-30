@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
@@ -35,15 +35,7 @@ export default function DashboardPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Fetch saved readings when readings tab is active
-  useEffect(() => {
-    if (activeTab === 'readings' && user) {
-      fetchReadings();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, user]);
-
-  const fetchReadings = async () => {
+  const fetchReadings = useCallback(async () => {
     setLoadingReadings(true);
     try {
       const response = await fetch('/api/readings');
@@ -57,7 +49,14 @@ export default function DashboardPage() {
     } finally {
       setLoadingReadings(false);
     }
-  };
+  }, []);
+
+  // Fetch saved readings when readings tab is active
+  useEffect(() => {
+    if (activeTab === 'readings' && user) {
+      fetchReadings();
+    }
+  }, [activeTab, user, fetchReadings]);
 
   const handleDeleteReading = async (readingId: string) => {
     if (!confirm('Are you sure you want to delete this reading?')) {
