@@ -9,7 +9,7 @@ import type { User } from '@supabase/supabase-js';
 import type { Reading } from '@/types/reading';
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('readings');
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [savedReadings, setSavedReadings] = useState<Reading[]>([]);
@@ -88,10 +88,10 @@ export default function DashboardPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen pt-20 px-4 py-12 cosmic-bg flex items-center justify-center">
+        <main className="min-h-screen pt-20 px-4 py-12 mystical-bg flex items-center justify-center">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="text-white/70">Loading your dashboard...</p>
+            <p className="text-white/70 text-sm">Loading your dashboard...</p>
           </div>
         </main>
       </>
@@ -112,227 +112,125 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 px-4 py-12 cosmic-bg">
-        <div className="max-w-7xl mx-auto space-y-8">
-          {/* Header */}
-          <div className="glass-strong rounded-3xl p-8">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="flex items-center gap-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-3xl font-bold text-white">
+      <main className="min-h-screen pt-28 px-4 py-8 mystical-bg">
+        <div className="max-w-6xl mx-auto space-y-6">
+          {/* Header Section */}
+          <div className="glass-strong rounded-xl p-6 card-glow relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-32 h-32 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl"></div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-2xl font-bold text-white shadow-lg">
                   {displayName.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-white">{displayName}</h1>
-                  <p className="text-white/60">{userEmail}</p>
-                  <p className="text-white/50 text-sm mt-1">Member since {memberSince}</p>
+                  <h1 className="font-display text-2xl font-bold text-white tracking-tight">{displayName}</h1>
+                  <p className="text-white/60 text-xs mt-0.5">{userEmail}</p>
+                  <p className="text-white/50 text-[11px] mt-0.5">Member since {memberSince}</p>
                 </div>
               </div>
-              <Link href="/calculator" className="btn-secondary">
-                New Reading ✨
+              <Link href="/calculator" className="btn-secondary inline-flex items-center gap-2 text-sm">
+                <span>New Reading</span>
+                <span className="text-base">✨</span>
               </Link>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="glass rounded-2xl p-2 inline-flex gap-2">
-            <button
-              onClick={() => setActiveTab('overview')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                activeTab === 'overview'
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                  : 'text-white/70 hover:text-white'
-              }`}
-            >
-              Overview
-            </button>
+          <div className="glass-strong rounded-xl p-1.5 inline-flex gap-1.5">
             <button
               onClick={() => setActiveTab('readings')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                 activeTab === 'readings'
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
               }`}
             >
               Saved Readings
             </button>
             <button
               onClick={() => setActiveTab('settings')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                 activeTab === 'settings'
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
               }`}
             >
               Settings
             </button>
           </div>
 
-          {/* Overview Tab */}
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Your Numbers */}
-                <div className="glass-strong rounded-3xl p-8 space-y-6">
-                  <h2 className="text-2xl font-bold text-white">Your Core Numbers</h2>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-light rounded-2xl flex items-center justify-center text-2xl font-bold text-white">
-                        7
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-white">Mulank Number</h3>
-                        <p className="text-white/60 text-sm">Your driver number</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary-light rounded-2xl flex items-center justify-center text-2xl font-bold text-white">
-                        5
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-white">Destiny Number</h3>
-                        <p className="text-white/60 text-sm">Your life purpose</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Link href="/results" className="btn-outline w-full block text-center">
-                    View Full Reading
-                  </Link>
-                </div>
-
-                {/* Quick Stats */}
-                <div className="glass-strong rounded-3xl p-8 space-y-6">
-                  <h2 className="text-2xl font-bold text-white">Quick Stats</h2>
-
-                  <div className="space-y-6">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-white/80">Total Readings</span>
-                        <span className="text-2xl font-bold text-gradient">{savedReadings.length}</span>
-                      </div>
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-primary to-secondary w-2/3"></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-white/80">Profile Complete</span>
-                        <span className="text-2xl font-bold text-gradient">
-                          {user.user_metadata?.full_name ? '100%' : '50%'}
-                        </span>
-                      </div>
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-accent-gold to-accent-rose"
-                          style={{ width: user.user_metadata?.full_name ? '100%' : '50%' }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-white/10">
-                      <p className="text-white/60 text-sm">
-                        {user.user_metadata?.full_name
-                          ? 'Your profile is complete!'
-                          : 'Complete your profile to unlock personalized insights and recommendations'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Recent Activity */}
-              <div className="glass-strong rounded-3xl p-8 space-y-6">
-                <h2 className="text-2xl font-bold text-white">Recent Activity</h2>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 p-4 glass rounded-xl">
-                    <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary">
-                      🔢
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-white font-medium">New reading calculated</p>
-                      <p className="text-white/50 text-sm">2 days ago</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 p-4 glass rounded-xl">
-                    <div className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary">
-                      📊
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-white font-medium">Profile updated</p>
-                      <p className="text-white/50 text-sm">1 week ago</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Saved Readings Tab */}
           {activeTab === 'readings' && (
-            <div className="space-y-6">
-              <div className="glass-strong rounded-3xl p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">Saved Readings</h2>
+            <div className="space-y-5">
+              <div className="glass-strong rounded-xl p-6 card-glow">
+                <div className="flex items-center gap-2.5 pb-4 border-b border-white/10">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-violet/20 to-accent-amber/20 border border-accent-violet/30 flex items-center justify-center text-lg">
+                    📚
+                  </div>
+                  <h2 className="font-display text-xl font-semibold text-white tracking-tight">Saved Readings</h2>
+                </div>
 
                 {loadingReadings ? (
-                  <div className="text-center py-12">
-                    <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-white/60 mt-4">Loading your readings...</p>
+                  <div className="text-center py-10">
+                    <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="text-white/60 mt-3 text-xs">Loading your readings...</p>
                   </div>
                 ) : savedReadings.length === 0 ? (
-                  <div className="text-center py-12 space-y-4">
-                    <p className="text-white/60">No saved readings yet</p>
-                    <Link href="/calculator" className="btn-primary inline-block">
+                  <div className="text-center py-10 space-y-3">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30 rounded-xl flex items-center justify-center text-3xl mx-auto">
+                      📖
+                    </div>
+                    <p className="text-white/60 text-xs">No saved readings yet</p>
+                    <Link href="/calculator" className="btn-primary inline-block text-sm">
                       Create Your First Reading
                     </Link>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-4 mt-5">
                     {savedReadings.map((reading) => (
                       <div
                         key={reading.id}
-                        className="glass rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 space-y-4"
+                        className="glass-strong rounded-xl p-5 hover:-translate-y-1 transition-all duration-300 space-y-4 card-glow group"
                       >
-                        <div className="flex items-center justify-between">
-                          <h3 className="text-lg font-bold text-white">
+                        <div className="flex items-start justify-between gap-3">
+                          <h3 className="font-display text-base font-semibold text-white tracking-tight">
                             {reading.title || `Reading for ${new Date(reading.date_of_birth).toLocaleDateString()}`}
                           </h3>
-                          <span className="text-white/50 text-sm">
+                          <span className="text-white/50 text-[11px] whitespace-nowrap">
                             {new Date(reading.created_at).toLocaleDateString()}
                           </span>
                         </div>
 
-                        <div className="text-white/70 text-sm">
-                          DOB: {new Date(reading.date_of_birth).toLocaleDateString()}
+                        <div className="text-white/70 text-xs">
+                          <span className="text-white/50">DOB:</span> {new Date(reading.date_of_birth).toLocaleDateString()}
                         </div>
 
-                        <div className="flex gap-4">
-                          <div className="flex-1 text-center p-3 bg-primary/10 rounded-xl">
-                            <div className="text-2xl font-bold text-gradient">{reading.mulank}</div>
-                            <div className="text-white/60 text-sm mt-1">Mulank</div>
+                        <div className="flex gap-3">
+                          <div className="flex-1 text-center p-3 glass rounded-lg group-hover:bg-white/5 transition-all duration-300">
+                            <div className="text-xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">{reading.mulank}</div>
+                            <div className="text-white/60 text-[11px] mt-0.5">Mulank</div>
                           </div>
-                          <div className="flex-1 text-center p-3 bg-secondary/10 rounded-xl">
-                            <div className="text-2xl font-bold text-gradient">{reading.destiny}</div>
-                            <div className="text-white/60 text-sm mt-1">Destiny</div>
+                          <div className="flex-1 text-center p-3 glass rounded-lg group-hover:bg-white/5 transition-all duration-300">
+                            <div className="text-xl font-bold bg-gradient-to-r from-secondary to-accent-amber bg-clip-text text-transparent">{reading.destiny}</div>
+                            <div className="text-white/60 text-[11px] mt-0.5">Destiny</div>
                           </div>
                         </div>
 
-                        <div className="flex gap-3 pt-4">
+                        <div className="flex gap-2 pt-1">
                           <Link
                             href={`/reading/${reading.id}`}
-                            className="flex-1 btn-outline text-sm py-2 text-center"
+                            className="flex-1 btn-outline text-xs py-2 text-center"
                           >
                             View Details
                           </Link>
                           <button
                             onClick={() => handleDeleteReading(reading.id)}
                             disabled={deleteLoading === reading.id}
-                            className="btn-outline text-red-400 border-red-400/30 hover:bg-red-500/10 disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm py-2"
+                            className="btn-outline text-red-400 border-red-400/30 hover:bg-red-500/10 hover:border-red-400/50 disabled:opacity-50 disabled:cursor-not-allowed px-3 text-xs py-2"
                           >
                             {deleteLoading === reading.id ? (
-                              <span className="w-5 h-5 border-2 border-red-400/30 border-t-red-400 rounded-full animate-spin inline-block"></span>
+                              <span className="w-4 h-4 border-2 border-red-400/30 border-t-red-400 rounded-full animate-spin inline-block"></span>
                             ) : (
                               '🗑️'
                             )}
@@ -348,77 +246,48 @@ export default function DashboardPage() {
 
           {/* Settings Tab */}
           {activeTab === 'settings' && (
-            <div className="space-y-6">
-              <div className="glass-strong rounded-3xl p-8 space-y-6">
-                <h2 className="text-2xl font-bold text-white">Account Settings</h2>
+            <div className="space-y-5">
+              <div className="glass-strong rounded-xl p-6 space-y-5 card-glow">
+                <div className="flex items-center gap-2.5 pb-4 border-b border-white/10">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-emerald/20 to-accent-violet/20 border border-accent-emerald/30 flex items-center justify-center text-lg">
+                    ⚙️
+                  </div>
+                  <h2 className="font-display text-xl font-semibold text-white tracking-tight">Account Settings</h2>
+                </div>
 
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Full Name</label>
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-medium text-white/90">Full Name</label>
                     <input
                       type="text"
                       defaultValue={displayName}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full px-3.5 py-2.5 bg-white/5 border border-white/20 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Email Address</label>
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-medium text-white/90">Email Address</label>
                     <input
                       type="email"
                       defaultValue={userEmail}
                       disabled
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white/50 placeholder-white/40 focus:outline-none cursor-not-allowed"
+                      className="w-full px-3.5 py-2.5 bg-white/5 border border-white/20 rounded-lg text-sm text-white/50 placeholder-white/40 focus:outline-none cursor-not-allowed"
                     />
-                    <p className="text-xs text-white/50">Email cannot be changed</p>
+                    <p className="text-[11px] text-white/50">Email cannot be changed</p>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Date of Birth</label>
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-medium text-white/90">Date of Birth</label>
                     <input
                       type="date"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full px-3.5 py-2.5 bg-white/5 border border-white/20 rounded-lg text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
                     />
                   </div>
 
-                  <button className="btn-primary">
+                  <button className="btn-primary w-full sm:w-auto text-sm">
                     Save Changes
                   </button>
                 </div>
-              </div>
-
-              <div className="glass-strong rounded-3xl p-8 space-y-6">
-                <h2 className="text-2xl font-bold text-white">Preferences</h2>
-
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 glass rounded-xl">
-                    <div>
-                      <p className="text-white font-medium">Email Notifications</p>
-                      <p className="text-white/60 text-sm">Receive updates and insights</p>
-                    </div>
-                    <button className="w-14 h-8 bg-primary rounded-full relative">
-                      <span className="absolute right-1 top-1 w-6 h-6 bg-white rounded-full"></span>
-                    </button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 glass rounded-xl">
-                    <div>
-                      <p className="text-white font-medium">Daily Numerology Tips</p>
-                      <p className="text-white/60 text-sm">Get daily insights in your inbox</p>
-                    </div>
-                    <button className="w-14 h-8 bg-white/20 rounded-full relative">
-                      <span className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full"></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="glass-strong rounded-3xl p-8 space-y-4 border-2 border-red-500/20">
-                <h2 className="text-2xl font-bold text-white">Danger Zone</h2>
-                <p className="text-white/60">Once you delete your account, there is no going back. Please be certain.</p>
-                <button className="btn-outline border-red-500 text-red-400 hover:bg-red-500/10">
-                  Delete Account
-                </button>
               </div>
             </div>
           )}
