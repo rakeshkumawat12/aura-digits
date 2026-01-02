@@ -94,14 +94,14 @@ export function generateLuShuGrid(dob: string): number[][] {
     }
   });
 
-  // Lu Shu Grid layout:
+  // Lu Shu Grid layout (showing actual numbers, not frequency):
   // [4] [9] [2]
   // [3] [5] [7]
   // [8] [1] [6]
   const grid = [
-    [frequency[4], frequency[9], frequency[2]],
-    [frequency[3], frequency[5], frequency[7]],
-    [frequency[8], frequency[1], frequency[6]]
+    [frequency[4] > 0 ? 4 : 0, frequency[9] > 0 ? 9 : 0, frequency[2] > 0 ? 2 : 0],
+    [frequency[3] > 0 ? 3 : 0, frequency[5] > 0 ? 5 : 0, frequency[7] > 0 ? 7 : 0],
+    [frequency[8] > 0 ? 8 : 0, frequency[1] > 0 ? 1 : 0, frequency[6] > 0 ? 6 : 0]
   ];
 
   return grid;

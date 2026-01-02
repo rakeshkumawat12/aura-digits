@@ -350,12 +350,12 @@ export default function LoginSignupSection() {
 
               <Button
                 type="submit"
-                className="w-full h-10 rounded-lg bg-gradient-to-r from-primary via-primary-light to-primary text-white hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-10 rounded-lg bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary border border-primary/30 hover:shadow-lg hover:shadow-primary/40 transition-all hover:-translate-y-0.5 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    <span className="w-4 h-4 border-2 border-bg-primary/30 border-t-bg-primary rounded-full animate-spin"></span>
                     Signing in...
                   </span>
                 ) : (

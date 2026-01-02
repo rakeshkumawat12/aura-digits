@@ -901,40 +901,46 @@ function ResultsContent() {
         {/* Lu Shu Grid */}
         <div className="space-y-8 animate-fade-in-up reveal-5">
           {/* Header Section */}
-          <div className="glass-strong rounded-2xl p-8 card-glow relative overflow-hidden">
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-accent-violet/10 to-accent-amber/10 rounded-full blur-3xl"></div>
+          <div className="glass-strong rounded-2xl p-8 card-glow relative overflow-hidden border border-primary/10">
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-primary/10 to-accent-gold/10 rounded-full blur-3xl"></div>
             <div className="relative z-10 text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong border border-accent-violet/30 mb-2">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-accent-violet to-accent-amber"></div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong border border-primary/30 mb-2">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent-gold animate-pulse"></div>
                 <span className="text-white/70 text-xs font-medium tracking-wider uppercase">
                   Ancient Chinese Numerology
                 </span>
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">
+              <h2 className="font-display text-3xl md:text-4xl font-semibold bg-gradient-to-r from-primary via-accent-gold to-primary bg-clip-text text-transparent tracking-tight">
                 Lo Shu Grid Analysis
               </h2>
               <div className="flex items-center justify-center gap-2">
-                <div className="h-px w-12 bg-gradient-to-r from-transparent to-accent-violet/50"></div>
-                <p className="text-accent-violet text-sm font-medium">
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-primary/50"></div>
+                <p className="text-primary text-sm font-medium">
                   Energy Matrix
                 </p>
-                <div className="h-px w-12 bg-gradient-to-l from-transparent to-accent-violet/50"></div>
+                <div className="h-px w-12 bg-gradient-to-l from-transparent to-primary/50"></div>
               </div>
             </div>
           </div>
 
           {/* Grid Display */}
-          <div className="glass-strong rounded-2xl p-8 card-glow">
+          <div className="glass-strong rounded-2xl p-8 card-glow border border-primary/10">
             <div className="max-w-sm mx-auto">
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-4">
                 {luShuGrid.map((row, i) =>
                   row.map((num, j) => (
                     <div
                       key={`${i}-${j}`}
-                      className="aspect-square bg-gradient-to-br from-accent-violet/20 to-accent-amber/20 border border-accent-violet/30 rounded-xl flex items-center justify-center text-3xl font-bold text-white hover:scale-105 hover:border-accent-violet hover:shadow-lg hover:shadow-accent-violet/20 transition-all duration-300 relative group"
+                      className={`aspect-square rounded-xl flex items-center justify-center text-4xl font-bold transition-all duration-300 relative group ${
+                        num === 0
+                          ? 'bg-white/5 border border-white/10 text-white/20'
+                          : 'bg-gradient-to-br from-primary/20 via-accent-gold/20 to-primary/20 border-2 border-primary/40 hover:scale-105 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/30'
+                      }`}
                     >
-                      <span className="relative z-10">{num}</span>
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-accent-violet/0 to-accent-amber/0 group-hover:from-accent-violet/10 group-hover:to-accent-amber/10 transition-all duration-300"></div>
+                      <span className={`relative z-10 ${num !== 0 ? 'bg-gradient-to-br from-accent-gold via-primary to-accent-champagne bg-clip-text text-transparent animate-gold-glow drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]' : ''}`}>{num || ''}</span>
+                      {num !== 0 && (
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/0 to-accent-gold/0 group-hover:from-primary/20 group-hover:to-accent-gold/20 transition-all duration-300"></div>
+                      )}
                     </div>
                   ))
                 )}
@@ -943,17 +949,17 @@ function ResultsContent() {
           </div>
 
           {/* Description Card */}
-          <div className="glass-strong rounded-2xl p-6 card-glow">
+          <div className="glass-strong rounded-2xl p-6 card-glow border border-primary/10">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-violet/20 to-accent-amber/20 border border-accent-violet/30 flex items-center justify-center text-base flex-shrink-0 mt-0.5">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent-gold/20 border border-primary/30 flex items-center justify-center text-base flex-shrink-0 mt-0.5">
                 📊
               </div>
               <div className="flex-1">
-                <h4 className="font-display text-lg font-semibold text-white mb-2">
+                <h4 className="font-display text-lg font-semibold bg-gradient-to-r from-primary to-accent-gold bg-clip-text text-transparent mb-2">
                   Understanding Your Grid
                 </h4>
-                <p className="text-white/70 text-xs leading-relaxed">
-                  The 3×3 grid reveals your strengths, weaknesses, and areas for personal development. Each number represents the frequency of that digit in your birth date, creating a unique energy pattern that influences your personality and life path.
+                <p className="text-white/70 text-sm leading-relaxed">
+                  The Lo Shu Grid displays which numbers from 1-9 appear in your birth date. Each present number (shown in gold) reveals specific energies and traits that influence your personality and life path. Empty boxes indicate numbers absent from your birth date, representing areas for growth.
                 </p>
               </div>
             </div>

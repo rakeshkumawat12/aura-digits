@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -117,7 +115,7 @@
 
   body {
     @apply bg-bg-primary text-white antialiased min-h-screen overflow-x-hidden;
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-geist), -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 400;
     position: relative;
   }
@@ -214,7 +212,7 @@
 
   /* Primary Button for Nav */
   .btn-nav-primary {
-    @apply text-sm font-semibold px-5 py-2.5 rounded-lg bg-gradient-to-r from-primary to-primary-light text-white transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5;
+    @apply text-sm font-semibold px-5 py-2.5 rounded-lg bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary border border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5;
   }
 
   .text-gradient {

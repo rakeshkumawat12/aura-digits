@@ -9,26 +9,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Mystical teal-bronze palette
+        // Premium gold-themed palette
         primary: {
-          DEFAULT: '#0D9488', // Rich teal
-          light: '#14B8A6',
-          dark: '#0F766E',
-          foreground: '#ffffff',
+          DEFAULT: '#D4AF37', // Luxurious gold
+          light: '#F4E5A1',
+          dark: '#B8942C',
+          foreground: '#0A0A0F',
         },
         secondary: {
-          DEFAULT: '#B45309', // Deep bronze
-          light: '#D97706',
-          dark: '#92400E',
+          DEFAULT: '#8B7355', // Warm bronze-gold
+          light: '#A68968',
+          dark: '#6B5842',
           foreground: '#ffffff',
         },
         accent: {
-          DEFAULT: '#0D9488',
+          DEFAULT: '#D4AF37',
           amber: '#F59E0B',
           rose: '#E11D48',
           violet: '#7C3AED',
           emerald: '#10B981',
-          foreground: '#ffffff',
+          gold: '#FFD700',
+          champagne: '#F7E7CE',
+          foreground: '#0A0A0F',
         },
         bg: {
           primary: '#0A0A0F', // Deep noir
@@ -50,18 +52,18 @@ const config: Config = {
           DEFAULT: '#13131C',
           foreground: '#ffffff',
         },
-        border: 'rgba(255, 255, 255, 0.1)',
-        input: 'rgba(255, 255, 255, 0.15)',
-        ring: '#0D9488',
+        border: 'rgba(212, 175, 55, 0.15)',
+        input: 'rgba(212, 175, 55, 0.1)',
+        ring: '#D4AF37',
         destructive: {
           DEFAULT: '#E11D48',
           foreground: '#ffffff',
         },
       },
       fontFamily: {
-        sans: ['Outfit', 'system-ui', 'sans-serif'],
-        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['var(--font-geist)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-geist)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-geist)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
@@ -72,6 +74,9 @@ const config: Config = {
         'slide-in-left': 'slide-in-left 0.7s ease-out',
         'scale-in': 'scale-in 0.6s ease-out',
         'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+        'gold-glow': 'gold-glow 3s ease-in-out infinite',
+        'shimmer-slide': 'shimmer-slide var(--speed) ease-in-out infinite alternate',
+        'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear',
       },
       keyframes: {
         float: {
@@ -81,10 +86,20 @@ const config: Config = {
         },
         'pulse-glow': {
           '0%, 100%': {
-            boxShadow: '0 0 20px rgba(13, 148, 136, 0.3), 0 0 40px rgba(13, 148, 136, 0.1)'
+            boxShadow: '0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1)'
           },
           '50%': {
-            boxShadow: '0 0 30px rgba(13, 148, 136, 0.5), 0 0 60px rgba(13, 148, 136, 0.2)'
+            boxShadow: '0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2)'
+          },
+        },
+        'gold-glow': {
+          '0%, 100%': {
+            textShadow: '0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.3)',
+            filter: 'brightness(1)',
+          },
+          '50%': {
+            textShadow: '0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.5)',
+            filter: 'brightness(1.2)',
           },
         },
         shimmer: {
@@ -128,6 +143,25 @@ const config: Config = {
         'glow-pulse': {
           '0%, 100%': { filter: 'brightness(1)' },
           '50%': { filter: 'brightness(1.3)' },
+        },
+        'shimmer-slide': {
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
+        'spin-around': {
+          '0%': {
+            transform: 'translateZ(0) rotate(0)',
+          },
+          '15%, 35%': {
+            transform: 'translateZ(0) rotate(90deg)',
+          },
+          '65%, 85%': {
+            transform: 'translateZ(0) rotate(270deg)',
+          },
+          '100%': {
+            transform: 'translateZ(0) rotate(360deg)',
+          },
         },
       },
       backgroundImage: {

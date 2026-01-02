@@ -120,7 +120,7 @@ export default function DashboardPage() {
 
             <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary via-accent-gold to-secondary rounded-xl flex items-center justify-center text-2xl font-bold text-bg-primary shadow-lg shadow-primary/30 border border-primary/20">
                   {displayName.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -129,7 +129,7 @@ export default function DashboardPage() {
                   <p className="text-white/50 text-[11px] mt-0.5">Member since {memberSince}</p>
                 </div>
               </div>
-              <Link href="/calculator" className="btn-secondary inline-flex items-center gap-2 text-sm">
+              <Link href="/calculator" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary font-semibold text-sm shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 hover:-translate-y-0.5 border border-primary/30">
                 <span>New Reading</span>
                 <span className="text-base">✨</span>
               </Link>
@@ -137,23 +137,23 @@ export default function DashboardPage() {
           </div>
 
           {/* Tabs */}
-          <div className="glass-strong rounded-xl p-1.5 inline-flex gap-1.5">
+          <div className="glass-strong rounded-xl p-1.5 inline-flex gap-1.5 border border-primary/10">
             <button
               onClick={() => setActiveTab('readings')}
-              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                 activeTab === 'readings'
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
-                  : 'text-white/70 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary shadow-lg shadow-primary/30'
+                  : 'text-white/70 hover:text-primary hover:bg-primary/5'
               }`}
             >
               Saved Readings
             </button>
             <button
               onClick={() => setActiveTab('settings')}
-              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                 activeTab === 'settings'
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
-                  : 'text-white/70 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary shadow-lg shadow-primary/30'
+                  : 'text-white/70 hover:text-primary hover:bg-primary/5'
               }`}
             >
               Settings
@@ -163,12 +163,12 @@ export default function DashboardPage() {
           {/* Saved Readings Tab */}
           {activeTab === 'readings' && (
             <div className="space-y-5">
-              <div className="glass-strong rounded-xl p-6 card-glow">
-                <div className="flex items-center gap-2.5 pb-4 border-b border-white/10">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-violet/20 to-accent-amber/20 border border-accent-violet/30 flex items-center justify-center text-lg">
+              <div className="glass-strong rounded-xl p-6 card-glow border border-primary/10">
+                <div className="flex items-center gap-2.5 pb-4 border-b border-primary/20">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent-gold/20 border border-primary/30 flex items-center justify-center text-lg">
                     📚
                   </div>
-                  <h2 className="font-display text-xl font-semibold text-white tracking-tight">Saved Readings</h2>
+                  <h2 className="font-display text-xl font-semibold bg-gradient-to-r from-primary to-accent-gold bg-clip-text text-transparent tracking-tight">Saved Readings</h2>
                 </div>
 
                 {loadingReadings ? (
@@ -178,11 +178,11 @@ export default function DashboardPage() {
                   </div>
                 ) : savedReadings.length === 0 ? (
                   <div className="text-center py-10 space-y-3">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30 rounded-xl flex items-center justify-center text-3xl mx-auto">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent-gold/20 border border-primary/30 rounded-xl flex items-center justify-center text-3xl mx-auto shadow-lg shadow-primary/20">
                       📖
                     </div>
                     <p className="text-white/60 text-xs">No saved readings yet</p>
-                    <Link href="/calculator" className="btn-primary inline-block text-sm">
+                    <Link href="/calculator" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary font-semibold text-sm shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 hover:-translate-y-0.5">
                       Create Your First Reading
                     </Link>
                   </div>
@@ -207,27 +207,27 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="flex gap-3">
-                          <div className="flex-1 text-center p-3 glass rounded-lg group-hover:bg-white/5 transition-all duration-300">
-                            <div className="text-xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">{reading.mulank}</div>
-                            <div className="text-white/60 text-[11px] mt-0.5">Mulank</div>
+                          <div className="flex-1 text-center p-3 glass rounded-lg group-hover:bg-primary/5 transition-all duration-300 border border-primary/10 group-hover:border-primary/20">
+                            <div className="text-2xl font-bold bg-gradient-to-br from-accent-gold via-primary to-accent-champagne bg-clip-text text-transparent animate-gold-glow drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">{reading.mulank}</div>
+                            <div className="text-white/60 text-[11px] mt-1 font-medium">Mulank</div>
                           </div>
-                          <div className="flex-1 text-center p-3 glass rounded-lg group-hover:bg-white/5 transition-all duration-300">
-                            <div className="text-xl font-bold bg-gradient-to-r from-secondary to-accent-amber bg-clip-text text-transparent">{reading.destiny}</div>
-                            <div className="text-white/60 text-[11px] mt-0.5">Destiny</div>
+                          <div className="flex-1 text-center p-3 glass rounded-lg group-hover:bg-primary/5 transition-all duration-300 border border-primary/10 group-hover:border-primary/20">
+                            <div className="text-2xl font-bold bg-gradient-to-br from-accent-gold via-primary to-accent-champagne bg-clip-text text-transparent animate-gold-glow drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">{reading.destiny}</div>
+                            <div className="text-white/60 text-[11px] mt-1 font-medium">Destiny</div>
                           </div>
                         </div>
 
                         <div className="flex gap-2 pt-1">
                           <Link
                             href={`/reading/${reading.id}`}
-                            className="flex-1 btn-outline text-xs py-2 text-center"
+                            className="flex-1 text-center px-4 py-2 rounded-lg border border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 text-xs font-medium"
                           >
                             View Details
                           </Link>
                           <button
                             onClick={() => handleDeleteReading(reading.id)}
                             disabled={deleteLoading === reading.id}
-                            className="btn-outline text-red-400 border-red-400/30 hover:bg-red-500/10 hover:border-red-400/50 disabled:opacity-50 disabled:cursor-not-allowed px-3 text-xs py-2"
+                            className="px-3 py-2 rounded-lg border border-red-400/30 text-red-400 hover:bg-red-500/10 hover:border-red-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 text-xs"
                           >
                             {deleteLoading === reading.id ? (
                               <span className="w-4 h-4 border-2 border-red-400/30 border-t-red-400 rounded-full animate-spin inline-block"></span>
@@ -247,12 +247,12 @@ export default function DashboardPage() {
           {/* Settings Tab */}
           {activeTab === 'settings' && (
             <div className="space-y-5">
-              <div className="glass-strong rounded-xl p-6 space-y-5 card-glow">
-                <div className="flex items-center gap-2.5 pb-4 border-b border-white/10">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-emerald/20 to-accent-violet/20 border border-accent-emerald/30 flex items-center justify-center text-lg">
+              <div className="glass-strong rounded-xl p-6 space-y-5 card-glow border border-primary/10">
+                <div className="flex items-center gap-2.5 pb-4 border-b border-primary/20">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent-gold/20 border border-primary/30 flex items-center justify-center text-lg">
                     ⚙️
                   </div>
-                  <h2 className="font-display text-xl font-semibold text-white tracking-tight">Account Settings</h2>
+                  <h2 className="font-display text-xl font-semibold bg-gradient-to-r from-primary to-accent-gold bg-clip-text text-transparent tracking-tight">Account Settings</h2>
                 </div>
 
                 <div className="space-y-4">
@@ -284,7 +284,7 @@ export default function DashboardPage() {
                     />
                   </div>
 
-                  <button className="btn-primary w-full sm:w-auto text-sm">
+                  <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary via-accent-gold to-primary text-bg-primary font-semibold text-sm shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto">
                     Save Changes
                   </button>
                 </div>
