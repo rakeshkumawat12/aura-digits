@@ -18,7 +18,7 @@ export function Hero() {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="relative w-full h-full max-w-3xl mx-auto flex items-center justify-center">
           {/* SignCircle.png with rotation animation */}
-          <div className="relative w-[300px] h-[300px] md:w-[380px] md:h-[380px] lg:w-[450px] lg:h-[450px] animate-spin-slow opacity-25">
+          <div className="relative w-[250px] h-[250px] sm:w-[320px] sm:h-[320px] md:w-[380px] md:h-[380px] lg:w-[450px] lg:h-[450px] animate-spin-slow opacity-25">
             <Image
               src="/images/SignCircle.png"
               alt="Zodiac Circle"
@@ -31,7 +31,7 @@ export function Hero() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-20 max-w-3xl mx-auto px-6 sm:px-8 lg:px-10 py-20 text-center">
+      <div className="relative z-20 max-w-3xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-16 sm:py-20 text-center">
         {/* Main Heading */}
         <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight animate-fade-in-up mb-6">
           Unlock Your Life's

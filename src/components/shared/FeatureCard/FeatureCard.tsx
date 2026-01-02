@@ -24,12 +24,12 @@ export function FeatureCard({
   color,
 }: FeatureCardProps) {
   return (
-    <div className={`glass rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-gradient-to-br ${colorClasses[color]}`}>
-      <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 ${iconColorClasses[color]}`}>
-        <span className="text-3xl">{icon}</span>
+    <div className={`glass rounded-2xl p-5 sm:p-6 md:p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-gradient-to-br ${colorClasses[color]}`}>
+      <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center mb-4 sm:mb-5 md:mb-6 ${iconColorClasses[color]}`}>
+        <span className="text-2xl sm:text-3xl">{icon}</span>
       </div>
-      <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
-      <p className="text-white/70 leading-relaxed">{description}</p>
+      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">{title}</h3>
+      <p className="text-sm sm:text-base text-white/70 leading-relaxed">{description}</p>
     </div>
   );
 }

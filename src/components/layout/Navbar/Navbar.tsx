@@ -61,8 +61,8 @@ export function Navbar() {
   return (
     <>
       {/* Floating Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
-        <div className="max-w-5xl mx-auto">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 pt-3 sm:pt-4">
+        <div className="max-w-7xl mx-auto">
           <div
             className={`
               floating-navbar
@@ -70,7 +70,7 @@ export function Navbar() {
               transition-all duration-300
             `}
           >
-            <div className="flex items-center justify-between h-16 px-6">
+            <div className="flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6">
               {/* Logo */}
               <Link
                 href="/"
@@ -170,10 +170,10 @@ export function Navbar() {
           onClick={() => setIsMenuOpen(false)}
         >
           <div
-            className="absolute top-24 left-4 right-4 max-w-md mx-auto floating-navbar animate-scale-in"
+            className="absolute top-20 sm:top-24 left-3 right-3 sm:left-4 sm:right-4 max-w-md mx-auto floating-navbar animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               {/* Mobile Navigation Links */}
               <div className="space-y-2">
                 <Link

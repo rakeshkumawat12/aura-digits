@@ -19,9 +19,9 @@ export default function Home() {
         <HowItWorks />
 
         {/* CTA Section */}
-        <section className="py-16 px-4">
+        <section className="py-12 sm:py-16 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto">
-            <div className="glass-strong rounded-[2rem] p-8 md:p-12 text-center space-y-6 card-glow relative overflow-hidden">
+            <div className="glass-strong rounded-2xl sm:rounded-[2rem] p-6 sm:p-8 md:p-10 lg:p-12 text-center space-y-4 sm:space-y-6 card-glow relative overflow-hidden">
               {/* Decorative gradient orbs */}
               <div className="absolute -top-24 -right-24 w-60 h-60 bg-gradient-to-br from-primary/25 to-secondary/25 rounded-full blur-3xl animate-pulse-glow"></div>
               <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-gradient-to-br from-accent-violet/25 to-accent-emerald/25 rounded-full blur-3xl animate-pulse-glow"></div>
