@@ -8,49 +8,49 @@ export interface PersonalityGroup {
 
 export const personalityGroups: Record<'A' | 'B', PersonalityGroup> = {
   A: {
-    name: "Group A",
-    label: "Career & Achievement Focused",
+    name: 'Group A',
+    label: 'Career & Achievement Focused',
     numbers: [1, 3, 4, 9],
     traits: [
-      "Strong focus on profession and career",
-      "Practical and goal-oriented mindset",
-      "Inner feeling of \"I must achieve something in life\"",
-      "Aggressive and competitive nature",
-      "Ego-driven tendencies",
-      "Emotionally intense but not very expressive",
-      "Natural leadership qualities",
-      "Strong decision-making ability",
-      "Hyperactive energy",
-      "May appear dominating to others"
+      'Strong focus on profession and career',
+      'Practical and goal-oriented mindset',
+      'Inner feeling of "I must achieve something in life"',
+      'Aggressive and competitive nature',
+      'Ego driven tendencies',
+      'Emotionally intense but not very expressive',
+      'Natural leadership qualities',
+      'Strong decision-making ability',
+      'Hyperactive energy',
+      'May appear dominating to others',
     ],
     behaviors: [
-      "Career is a top priority in life decisions",
-      "Prefers logic and strategy over emotions",
-      "Takes charge in professional and personal situations",
-      "Driven by achievements and recognition"
-    ]
+      'Career is a top priority in life decisions',
+      'Prefers logic and strategy over emotions',
+      'Takes charge in professional and personal situations',
+      'Driven by achievements and recognition',
+    ],
   },
   B: {
-    name: "Group B",
-    label: "Emotional & Creative",
+    name: 'Group B',
+    label: 'Emotional & Creative',
     numbers: [2, 6, 7, 8],
     traits: [
-      "Feminine and nurturing qualities",
-      "Creative and artistic mindset",
-      "Thinks from the heart rather than logic",
-      "Emotion-driven decision making",
-      "Soft and calm nature",
-      "May take emotional decisions even when logic is needed",
-      "Caring and empathetic personality",
-      "Family-oriented; family is a top priority"
+      'Feminine and nurturing qualities',
+      'Creative and artistic mindset',
+      'Thinks from the heart rather than logic',
+      'Emotion driven decision making',
+      'Soft and calm nature',
+      'May take emotional decisions even when logic is needed',
+      'Caring and empathetic personality',
+      'Family oriented; family is a top priority',
     ],
     behaviors: [
-      "Family and relationships come first",
-      "Makes decisions based on feelings and intuition",
-      "Naturally empathetic and supportive",
-      "Values emotional connections over material success"
-    ]
-  }
+      'Family and relationships come first',
+      'Makes decisions based on feelings and intuition',
+      'Naturally empathetic and supportive',
+      'Values emotional connections over material success',
+    ],
+  },
 };
 
 export interface DigitFrequency {
@@ -77,11 +77,15 @@ export interface PersonalityAnalysis {
  */
 export function analyzePersonalityFromDOB(dob: string): PersonalityAnalysis {
   // Extract digits from DOB (ignore 0)
-  const digits = dob.replace(/[-\/]/g, '').split('').map(Number).filter(d => d !== 0);
+  const digits = dob
+    .replace(/[-\/]/g, '')
+    .split('')
+    .map(Number)
+    .filter((d) => d !== 0);
 
   // Count frequency of each digit
   const frequencyMap: Record<number, number> = {};
-  digits.forEach(digit => {
+  digits.forEach((digit) => {
     frequencyMap[digit] = (frequencyMap[digit] || 0) + 1;
   });
 
@@ -91,10 +95,16 @@ export function analyzePersonalityFromDOB(dob: string): PersonalityAnalysis {
     .sort((a, b) => b.count - a.count);
 
   // Count Group A numbers (1, 3, 4, 9)
-  const groupACount = [1, 3, 4, 9].reduce((sum, num) => sum + (frequencyMap[num] || 0), 0);
+  const groupACount = [1, 3, 4, 9].reduce(
+    (sum, num) => sum + (frequencyMap[num] || 0),
+    0
+  );
 
   // Count Group B numbers (2, 6, 7, 8)
-  const groupBCount = [2, 6, 7, 8].reduce((sum, num) => sum + (frequencyMap[num] || 0), 0);
+  const groupBCount = [2, 6, 7, 8].reduce(
+    (sum, num) => sum + (frequencyMap[num] || 0),
+    0
+  );
 
   // Count Number 5 (neutral adapter)
   const number5Count = frequencyMap[5] || 0;
@@ -113,34 +123,36 @@ export function analyzePersonalityFromDOB(dob: string): PersonalityAnalysis {
   if (groupACount === 0 && groupBCount === 0) {
     // Only number 5
     dominantGroup = 'balanced';
-    personalityType = "Flexible & Adaptive";
+    personalityType = 'Flexible & Adaptive';
     traits = [
-      "Highly flexible and adaptive nature",
-      "Excellent communication skills",
-      "Can fit into different situations easily",
-      "Balanced approach to career and emotions"
+      'Highly flexible and adaptive nature',
+      'Excellent communication skills',
+      'Can fit into different situations easily',
+      'Balanced approach to career and emotions',
     ];
     behaviors = [
-      "Adapts to any environment quickly",
-      "Can balance logic and emotions well",
-      "Versatile in career choices"
+      'Adapts to any environment quickly',
+      'Can balance logic and emotions well',
+      'Versatile in career choices',
     ];
-    description = "Your personality is centered around adaptability and communication. You have the unique ability to balance both career ambitions and emotional connections, making you versatile in various life situations.";
+    description =
+      'Your personality is centered around adaptability and communication. You have the unique ability to balance both career ambitions and emotional connections, making you versatile in various life situations.';
   } else if (Math.abs(groupATotal - groupBTotal) <= 1) {
     // Balanced personality
     dominantGroup = 'balanced';
-    personalityType = "Balanced Personality";
+    personalityType = 'Balanced Personality';
     traits = [
       ...personalityGroups.A.traits.slice(0, 5),
-      ...personalityGroups.B.traits.slice(0, 5)
+      ...personalityGroups.B.traits.slice(0, 5),
     ];
     behaviors = [
-      "Can switch between logical and emotional thinking",
-      "Balances career ambitions with family needs",
-      "Adapts approach based on situation",
-      "Values both achievement and relationships equally"
+      'Can switch between logical and emotional thinking',
+      'Balances career ambitions with family needs',
+      'Adapts approach based on situation',
+      'Values both achievement and relationships equally',
     ];
-    description = "You have a beautifully balanced personality with both Group A and Group B qualities. You can be career-focused when needed, yet remain emotionally connected and caring. This balance gives you flexibility in handling different life situations.";
+    description =
+      'You have a beautifully balanced personality with both Group A and Group B qualities. You can be career focused when needed, yet remain emotionally connected and caring. This balance gives you flexibility in handling different life situations.';
   } else if (groupATotal > groupBTotal) {
     // Group A dominant
     dominantGroup = 'A';
@@ -149,9 +161,9 @@ export function analyzePersonalityFromDOB(dob: string): PersonalityAnalysis {
     behaviors = personalityGroups.A.behaviors;
 
     if (number5Count > 0) {
-      description = `You are strongly driven by Group A energy with Number 5 amplifying your communication and adaptability. You are career-focused, goal-oriented, and possess strong leadership qualities. Your practical mindset helps you make strategic decisions, though you may need to consciously balance this with emotional awareness.`;
+      description = `You are strongly driven by Group A energy with Number 5 amplifying your communication and adaptability. You are career focused, goal-oriented, and possess strong leadership qualities. Your practical mindset helps you make strategic decisions, though you may need to consciously balance this with emotional awareness.`;
     } else {
-      description = `You are dominated by Group A energy, making you highly career-focused and achievement-oriented. Your practical, competitive nature drives you toward success, though you may appear intense or dominating to others. Remember to balance your professional drive with emotional connections.`;
+      description = `You are dominated by Group A energy, making you highly career focused and achievement-oriented. Your practical, competitive nature drives you toward success, though you may appear intense or dominating to others. Remember to balance your professional drive with emotional connections.`;
     }
   } else {
     // Group B dominant
@@ -163,7 +175,7 @@ export function analyzePersonalityFromDOB(dob: string): PersonalityAnalysis {
     if (number5Count > 0) {
       description = `You are guided by Group B energy with Number 5 enhancing your expressive and communicative nature. You lead with your heart, prioritize relationships, and have a naturally nurturing personality. Your creative and empathetic approach makes you a caring presence in others' lives.`;
     } else {
-      description = `You are dominated by Group B energy, making you deeply emotional, caring, and family-oriented. Your decisions come from the heart, and you naturally nurture those around you. While this is a beautiful quality, remember to occasionally apply logic to important decisions.`;
+      description = `You are dominated by Group B energy, making you deeply emotional, caring, and family oriented. Your decisions come from the heart, and you naturally nurture those around you. While this is a beautiful quality, remember to occasionally apply logic to important decisions.`;
     }
   }
 
@@ -176,11 +188,11 @@ export function analyzePersonalityFromDOB(dob: string): PersonalityAnalysis {
     personalityType,
     traits,
     behaviors,
-    description
+    description,
   };
 }
 
 export default {
   personalityGroups,
-  analyzePersonalityFromDOB
+  analyzePersonalityFromDOB,
 };

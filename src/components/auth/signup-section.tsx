@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   Card,
@@ -26,6 +27,7 @@ import {
 } from "lucide-react";
 
 export default function SignupSection() {
+  const router = useRouter();
   const supabase = createClient();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -36,6 +38,14 @@ export default function SignupSection() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Get return URL from sessionStorage
+  const getReturnUrl = () => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('returnUrl') || '/dashboard';
+    }
+    return '/dashboard';
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,10 +126,13 @@ export default function SignupSection() {
     setIsLoading(true);
 
     try {
+      // Store return URL in sessionStorage for callback handler
+      const returnUrl = getReturnUrl();
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`,
         },
       });
 

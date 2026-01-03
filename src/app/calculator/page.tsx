@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { DateField, DateInput } from '@/components/ui/datefield';
 import { Label } from '@/components/ui/field';
+import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
-export default function CalculatorPage() {
+function CalculatorContent() {
   const router = useRouter();
   const [dateValue, setDateValue] = useState<any>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -43,16 +44,16 @@ export default function CalculatorPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 px-4 flex items-center justify-center mystical-bg">
-        <div className="max-w-xl mx-auto w-full">
-          <div className="text-center mb-8 space-y-3 animate-fade-in-up">
-            <h1 className="font-display text-3xl md:text-4xl font-bold text-white tracking-tight">
+      <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 px-3 sm:px-4 md:px-6 flex items-center justify-center mystical-bg">
+        <div className="max-w-xl mx-auto w-full py-6 sm:py-8">
+          <div className="text-center mb-6 sm:mb-8 space-y-2 sm:space-y-3 animate-fade-in-up">
+            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
               Numerology Calculator
             </h1>
           </div>
 
-          <div className="glass-strong rounded-2xl p-6 md:p-8 space-y-6 card-glow animate-fade-in-up reveal-1">
-            <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 space-y-5 sm:space-y-6 card-glow animate-fade-in-up reveal-1">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               <div className="space-y-2">
                 <DateField
                   className="w-full space-y-2"
@@ -60,13 +61,13 @@ export default function CalculatorPage() {
                   onChange={setDateValue}
                   isInvalid={!!errors.dateOfBirth}
                 >
-                  <Label className="text-white/90 text-sm">
+                  <Label className="text-white/90 text-sm sm:text-base">
                     Date of Birth <span className="text-red-400 ml-1">*</span>
                   </Label>
-                  <DateInput className="w-full bg-white/5 border-white/20 text-white hover:bg-white/10 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary" />
+                  <DateInput className="w-full bg-white/5 border-white/20 text-white hover:bg-white/10 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary text-sm sm:text-base" />
                 </DateField>
                 {errors.dateOfBirth && (
-                  <span className="text-xs text-red-400">
+                  <span className="text-xs sm:text-sm text-red-400">
                     {errors.dateOfBirth}
                   </span>
                 )}
@@ -74,7 +75,7 @@ export default function CalculatorPage() {
 
               <button
                 type="submit"
-                className="w-full btn-secondary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn-secondary text-sm sm:text-base min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isCalculating}
               >
                 {isCalculating ? (
@@ -91,5 +92,13 @@ export default function CalculatorPage() {
         </div>
       </main>
     </>
+  );
+}
+
+export default function CalculatorPage() {
+  return (
+    <ProtectedRoute>
+      <CalculatorContent />
+    </ProtectedRoute>
   );
 }

@@ -58,6 +58,12 @@ const geist = localFont({
 export const metadata: Metadata = {
   title: 'Aura Digits - Numerology Calculator',
   description: 'Discover your life path through numerology. Calculate your Mulank, Destiny Number, and Lu Shu Grid.',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
 };
 
 export default function RootLayout({

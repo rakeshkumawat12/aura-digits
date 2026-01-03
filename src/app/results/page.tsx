@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
+import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import {
   calculateMulank,
   calculateDestinyNumber,
@@ -33,7 +34,7 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
   return (
     <Modal>
       <ModalTrigger
-        className={`glass-strong rounded-2xl p-6 space-y-4 group hover:-translate-y-1 transition-all duration-300 text-left card-glow ${colors.shadow} hover:shadow-lg w-full`}
+        className={`glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 space-y-2 sm:space-y-3 md:space-y-4 group hover:-translate-y-1 transition-all duration-300 text-left card-glow ${colors.shadow} hover:shadow-lg w-full`}
       >
         <div
           className={`w-14 h-14 mx-auto rounded-xl bg-gradient-to-br ${colors.gradient} border ${colors.border} flex items-center justify-center transition-all duration-300`}
@@ -43,20 +44,20 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
           </span>
         </div>
 
-        <div className="text-center space-y-2">
-          <h3 className="font-display text-lg font-semibold text-white">
+        <div className="text-center space-y-1.5 sm:space-y-2">
+          <h3 className="font-display text-base sm:text-lg font-semibold text-white">
             {angel.patterns}
           </h3>
           <div
-            className={`inline-block px-3 py-1 rounded-full ${colors.bg} border ${colors.border}`}
+            className={`inline-block px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full ${colors.bg} border ${colors.border}`}
           >
-            <span className="text-white/90 text-xs font-medium uppercase tracking-wider">
+            <span className="text-white/90 text-[10px] sm:text-xs font-medium uppercase tracking-wider">
               {angel.keyword}
             </span>
           </div>
         </div>
 
-        <p className="text-white/70 text-center text-xs leading-relaxed">
+        <p className="text-white/70 text-center text-xs sm:text-sm leading-relaxed">
           {angel.title}
         </p>
 
@@ -79,20 +80,20 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 px-8 pt-12 pb-8 text-center space-y-6">
+            <div className="relative z-10 px-4 sm:px-6 md:px-8 pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-7 md:pb-8 text-center space-y-4 sm:space-y-5 md:space-y-6">
               {/* Animated Icon */}
               <div className="flex justify-center">
                 <div
-                  className={`w-28 h-28 rounded-3xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-500 relative group`}
+                  className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-500 relative group`}
                 >
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="text-7xl relative z-10 animate-float">{angel.icon}</span>
+                  <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="text-5xl sm:text-6xl md:text-7xl relative z-10 animate-float">{angel.icon}</span>
                 </div>
               </div>
 
               {/* Number Pattern */}
-              <div className="space-y-3">
-                <h3 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
+              <div className="space-y-2 sm:space-y-3">
+                <h3 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
                   {angel.patterns}
                 </h3>
 
@@ -117,14 +118,14 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
               </div>
 
               {/* Title */}
-              <h4 className="font-display text-2xl md:text-3xl font-semibold text-white/95 leading-relaxed px-4">
+              <h4 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white/95 leading-relaxed px-3 sm:px-4">
                 {angel.title}
               </h4>
             </div>
           </div>
 
           {/* Main Content Area */}
-          <div className="px-8 py-8 space-y-6 bg-gradient-to-b from-bg-primary to-bg-secondary">
+          <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-7 md:py-8 space-y-4 sm:space-y-5 md:space-y-6 bg-gradient-to-b from-bg-primary to-bg-secondary">
             {/* Meaning Section */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
@@ -372,15 +373,15 @@ function ResultsContent() {
   };
 
   return (
-    <main className="min-h-screen pt-20 px-4 pb-12 mystical-bg">
-      <div id="results-content" className="max-w-6xl mx-auto space-y-12">
+    <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 px-3 sm:px-4 md:px-6 pb-8 sm:pb-10 md:pb-12 mystical-bg">
+      <div id="results-content" className="max-w-6xl mx-auto space-y-8 sm:space-y-10 md:space-y-12">
         {/* Header */}
-        <div className="text-center space-y-6 animate-fade-in-up mt-8">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">
+        <div className="text-center space-y-4 sm:space-y-5 md:space-y-6 animate-fade-in-up mt-6 sm:mt-8">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
             Your Numerology Reading
           </h1>
-          <div className="glass rounded-2xl p-5 inline-block">
-            <p className="text-white/80 text-base">
+          <div className="glass rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 inline-block">
+            <p className="text-white/80 text-sm sm:text-base">
               <strong className="text-white">Date of Birth:</strong>{' '}
               {formattedDate}
             </p>
@@ -388,53 +389,53 @@ function ResultsContent() {
         </div>
 
         {/* Core Numbers */}
-        <div className="space-y-8 animate-fade-in-up reveal-1">
+        <div className="space-y-6 sm:space-y-7 md:space-y-8 animate-fade-in-up reveal-1">
           {/* Section Header */}
-          <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30">
+          <div className="text-center space-y-2 sm:space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass border border-primary/30">
               <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-              <span className="text-white/70 text-sm font-medium tracking-wider uppercase">
+              <span className="text-white/70 text-xs sm:text-sm font-medium tracking-wider uppercase">
                 Your Core Numbers
               </span>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 max-w-4xl mx-auto">
             {/* Mulank Card */}
-            <div className="glass-strong rounded-2xl p-8 space-y-5 card-glow hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+            <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 space-y-3 sm:space-y-4 md:space-y-5 card-glow hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
               {/* Decorative elements */}
               <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-primary/20 to-accent-emerald/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
               <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-primary/10 to-primary-light/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
 
-              <div className="relative z-10 space-y-4">
+              <div className="relative z-10 space-y-3 sm:space-y-4">
                 {/* Number Display */}
                 <div className="relative">
-                  <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary via-primary-light to-accent-emerald flex items-center justify-center text-4xl font-bold text-white shadow-xl shadow-primary/40 group-hover:scale-110 transition-transform duration-500 relative">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary via-primary-light to-accent-emerald flex items-center justify-center text-2xl sm:text-3xl md:text-4xl font-bold text-white shadow-xl shadow-primary/40 group-hover:scale-110 transition-transform duration-500 relative">
                     {mulank}
                     {/* Orbiting dots */}
-                    <div className="absolute inset-0 rounded-2xl border-2 border-primary/30 animate-spin-slow"></div>
+                    <div className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-primary/30 animate-spin-slow"></div>
                   </div>
-                  <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-accent-emerald to-primary flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute -top-1.5 -right-1.5 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-br from-accent-emerald to-primary flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     ✨
                   </div>
                 </div>
 
                 {/* Title & Subtitle */}
-                <div className="space-y-1.5">
-                  <h2 className="font-display text-xl font-semibold text-white text-center tracking-tight">
+                <div className="space-y-1 sm:space-y-1.5">
+                  <h2 className="font-display text-lg sm:text-xl font-semibold text-white text-center tracking-tight">
                     Mulank Number
                   </h2>
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="h-px w-6 bg-gradient-to-r from-transparent to-primary/50"></div>
-                    <p className="text-primary-light text-[10px] font-medium tracking-widest uppercase">
+                  <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+                    <div className="h-px w-4 sm:w-6 bg-gradient-to-r from-transparent to-primary/50"></div>
+                    <p className="text-primary-light text-[9px] sm:text-[10px] font-medium tracking-widest uppercase">
                       {mulankData.planet} • Driver Number
                     </p>
-                    <div className="h-px w-6 bg-gradient-to-l from-transparent to-primary/50"></div>
+                    <div className="h-px w-4 sm:w-6 bg-gradient-to-l from-transparent to-primary/50"></div>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-white/75 text-center text-sm leading-relaxed">
+                <p className="text-white/75 text-center text-xs sm:text-sm leading-relaxed">
                   Your driver number reveals your core personality, natural
                   talents, and how you approach life challenges.
                 </p>
@@ -447,20 +448,20 @@ function ResultsContent() {
             </div>
 
             {/* Destiny Card */}
-            <div className="glass-strong rounded-2xl p-8 space-y-5 card-glow hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+            <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 space-y-3 sm:space-y-4 md:space-y-5 card-glow hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
               {/* Decorative elements */}
               <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-secondary/20 to-accent-amber/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
               <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-secondary/10 to-secondary-light/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
 
-              <div className="relative z-10 space-y-4">
+              <div className="relative z-10 space-y-3 sm:space-y-4">
                 {/* Number Display */}
                 <div className="relative">
-                  <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-secondary via-accent-amber to-secondary-light flex items-center justify-center text-4xl font-bold text-white shadow-xl shadow-secondary/40 group-hover:scale-110 transition-transform duration-500 relative">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-secondary via-accent-amber to-secondary-light flex items-center justify-center text-2xl sm:text-3xl md:text-4xl font-bold text-white shadow-xl shadow-secondary/40 group-hover:scale-110 transition-transform duration-500 relative">
                     {destiny}
                     {/* Orbiting dots */}
-                    <div className="absolute inset-0 rounded-2xl border-2 border-secondary/30 animate-spin-slow"></div>
+                    <div className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-secondary/30 animate-spin-slow"></div>
                   </div>
-                  <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-accent-amber to-secondary flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute -top-1.5 -right-1.5 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-br from-accent-amber to-secondary flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     🌟
                   </div>
                 </div>
@@ -495,34 +496,34 @@ function ResultsContent() {
         </div>
 
         {/* Mulank Details */}
-        <div className="space-y-8 animate-fade-in-up reveal-2">
+        <div className="space-y-6 sm:space-y-7 md:space-y-8 animate-fade-in-up reveal-2">
           {/* Header Section */}
-          <div className="glass-strong rounded-2xl p-8 card-glow relative overflow-hidden">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 card-glow relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-primary/10 to-accent-emerald/10 rounded-full blur-3xl"></div>
-            <div className="relative z-10 text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong border border-primary/30 mb-2">
+            <div className="relative z-10 text-center space-y-2 sm:space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full glass-strong border border-primary/30 mb-1 sm:mb-2">
                 <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-primary-light"></div>
-                <span className="text-white/70 text-xs font-medium tracking-wider uppercase">
+                <span className="text-white/70 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
                   Number {mulank} Profile
                 </span>
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                 {mulankData.title}
               </h2>
               <div className="flex items-center justify-center gap-2">
-                <div className="h-px w-12 bg-gradient-to-r from-transparent to-primary/50"></div>
-                <p className="text-primary-light text-sm font-medium">
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-primary/50"></div>
+                <p className="text-primary-light text-xs sm:text-sm font-medium">
                   Ruled by {mulankData.planet}
                 </p>
-                <div className="h-px w-12 bg-gradient-to-l from-transparent to-primary/50"></div>
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-primary/50"></div>
               </div>
             </div>
           </div>
 
           {/* Content Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
             {/* Core Characteristics Card */}
-            <div className="glass-strong rounded-2xl p-6 space-y-5 card-glow hover:-translate-y-1 transition-all duration-300 group">
+            <div className="glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4 md:space-y-5 card-glow hover:-translate-y-1 transition-all duration-300 group">
               <div className="flex items-center gap-3 pb-3 border-b border-white/10">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary-light/20 border border-primary/30 flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
                   ✨
@@ -899,39 +900,39 @@ function ResultsContent() {
         </div>
 
         {/* Lu Shu Grid */}
-        <div className="space-y-8 animate-fade-in-up reveal-5">
+        <div className="space-y-6 sm:space-y-7 md:space-y-8 animate-fade-in-up reveal-5">
           {/* Header Section */}
-          <div className="glass-strong rounded-2xl p-8 card-glow relative overflow-hidden border border-primary/10">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 card-glow relative overflow-hidden border border-primary/10">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-primary/10 to-accent-gold/10 rounded-full blur-3xl"></div>
-            <div className="relative z-10 text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong border border-primary/30 mb-2">
+            <div className="relative z-10 text-center space-y-2 sm:space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full glass-strong border border-primary/30 mb-1 sm:mb-2">
                 <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-accent-gold animate-pulse"></div>
-                <span className="text-white/70 text-xs font-medium tracking-wider uppercase">
+                <span className="text-white/70 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
                   Ancient Chinese Numerology
                 </span>
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold bg-gradient-to-r from-primary via-accent-gold to-primary bg-clip-text text-transparent tracking-tight">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold bg-gradient-to-r from-primary via-accent-gold to-primary bg-clip-text text-transparent tracking-tight">
                 Lo Shu Grid Analysis
               </h2>
               <div className="flex items-center justify-center gap-2">
-                <div className="h-px w-12 bg-gradient-to-r from-transparent to-primary/50"></div>
-                <p className="text-primary text-sm font-medium">
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-primary/50"></div>
+                <p className="text-primary text-xs sm:text-sm font-medium">
                   Energy Matrix
                 </p>
-                <div className="h-px w-12 bg-gradient-to-l from-transparent to-primary/50"></div>
+                <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-primary/50"></div>
               </div>
             </div>
           </div>
 
           {/* Grid Display */}
-          <div className="glass-strong rounded-2xl p-8 card-glow border border-primary/10">
-            <div className="max-w-sm mx-auto">
-              <div className="grid grid-cols-3 gap-4">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 card-glow border border-primary/10">
+            <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
                 {luShuGrid.map((row, i) =>
                   row.map((num, j) => (
                     <div
                       key={`${i}-${j}`}
-                      className={`aspect-square rounded-xl flex items-center justify-center text-4xl font-bold transition-all duration-300 relative group ${
+                      className={`aspect-square rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold transition-all duration-300 relative group ${
                         num === 0
                           ? 'bg-white/5 border border-white/10 text-white/20'
                           : 'bg-gradient-to-br from-primary/20 via-accent-gold/20 to-primary/20 border-2 border-primary/40 hover:scale-105 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/30'
@@ -939,7 +940,7 @@ function ResultsContent() {
                     >
                       <span className={`relative z-10 ${num !== 0 ? 'bg-gradient-to-br from-accent-gold via-primary to-accent-champagne bg-clip-text text-transparent animate-gold-glow drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]' : ''}`}>{num || ''}</span>
                       {num !== 0 && (
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/0 to-accent-gold/0 group-hover:from-primary/20 group-hover:to-accent-gold/20 transition-all duration-300"></div>
+                        <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/0 to-accent-gold/0 group-hover:from-primary/20 group-hover:to-accent-gold/20 transition-all duration-300"></div>
                       )}
                     </div>
                   ))
@@ -949,7 +950,7 @@ function ResultsContent() {
           </div>
 
           {/* Description Card */}
-          <div className="glass-strong rounded-2xl p-6 card-glow border border-primary/10">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 card-glow border border-primary/10">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent-gold/20 border border-primary/30 flex items-center justify-center text-base flex-shrink-0 mt-0.5">
                 📊
@@ -1125,41 +1126,41 @@ function ResultsContent() {
         )}
 
         {/* Angel Numbers Section */}
-        <div className="space-y-8 animate-fade-in-up reveal-6">
+        <div className="space-y-6 sm:space-y-7 md:space-y-8 animate-fade-in-up reveal-6">
           {/* Header Section */}
-          <div className="glass-strong rounded-2xl p-8 card-glow relative overflow-hidden">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 card-glow relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-accent-violet/10 to-accent-amber/10 rounded-full blur-3xl"></div>
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-br from-accent-emerald/10 to-accent-rose/10 rounded-full blur-3xl"></div>
 
-            <div className="relative z-10 text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong border border-accent-violet/30 mb-2">
+            <div className="relative z-10 text-center space-y-2 sm:space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full glass-strong border border-accent-violet/30 mb-1 sm:mb-2">
                 <div className="w-2 h-2 rounded-full bg-gradient-to-r from-accent-violet to-accent-amber"></div>
-                <span className="text-white/70 text-xs font-medium tracking-wider uppercase">
+                <span className="text-white/70 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
                   Divine Messages
                 </span>
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                 Angel Numbers
               </h2>
-              <div className="flex items-center justify-center gap-3 pt-1">
-                <div className="h-px w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                <p className="text-accent-violet text-sm font-medium">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 pt-0.5 sm:pt-1">
+                <div className="h-px w-8 sm:w-12 md:w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <p className="text-accent-violet text-xs sm:text-sm font-medium">
                   Messages from the Universe
                 </p>
-                <div className="h-px w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <div className="h-px w-8 sm:w-12 md:w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
               </div>
             </div>
           </div>
 
           {/* Description Card */}
-          <div className="glass-strong rounded-2xl p-6 card-glow">
-            <p className="text-white/80 text-sm leading-relaxed text-center max-w-3xl mx-auto">
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 card-glow">
+            <p className="text-white/80 text-xs sm:text-sm leading-relaxed text-center max-w-3xl mx-auto">
               Have you been seeing repeating numbers on clocks, receipts, or license plates? These aren't coincidences—they're Angel Numbers, gentle messages from the universe guiding your path.
             </p>
           </div>
 
           {/* Angel Numbers Grid */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
             {angelNumbers.map((angel) => (
               <AngelNumberCard key={angel.id} angel={angel} />
             ))}
@@ -1167,8 +1168,8 @@ function ResultsContent() {
         </div>
 
         {/* Disclaimer */}
-        <div className="glass rounded-2xl p-8 text-center space-y-3 animate-fade-in-up reveal-9">
-          <p className="text-white/80 text-lg leading-relaxed max-w-3xl mx-auto">
+        <div className="glass rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 text-center space-y-2 sm:space-y-3 animate-fade-in-up reveal-9">
+          <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
             These insights are based on your unique numerological profile. If
             something doesn't seem to fit right now, don't worry. Sometimes, it
             takes time for things to make sense. Trust your journey and stay
@@ -1196,15 +1197,15 @@ function ResultsContent() {
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-6 justify-center animate-fade-in-up reveal-9">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center animate-fade-in-up reveal-9">
           <button
             onClick={handleSaveReport}
             disabled={isSaving}
-            className="btn-primary text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary text-sm sm:text-base md:text-lg min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSaving ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                <span className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
                 Saving...
               </span>
             ) : (
@@ -1214,7 +1215,7 @@ function ResultsContent() {
           <button
             onClick={handleDownloadPDF}
             disabled={isGeneratingPDF}
-            className="btn-secondary text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-secondary text-sm sm:text-base md:text-lg min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGeneratingPDF ? (
               <span className="flex items-center justify-center gap-2">
@@ -1239,7 +1240,7 @@ function ResultsContent() {
 
 export default function ResultsPage() {
   return (
-    <>
+    <ProtectedRoute>
       <Navbar />
       <Suspense
         fallback={
@@ -1255,6 +1256,6 @@ export default function ResultsPage() {
       >
         <ResultsContent />
       </Suspense>
-    </>
+    </ProtectedRoute>
   );
 }

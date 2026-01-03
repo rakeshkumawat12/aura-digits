@@ -36,6 +36,14 @@ export default function LoginSignupSection() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
 
+  // Get return URL from sessionStorage
+  const getReturnUrl = () => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('returnUrl') || '/dashboard';
+    }
+    return '/dashboard';
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -76,7 +84,13 @@ export default function LoginSignupSection() {
       }
 
       if (data.user) {
-        router.push("/");
+        // Get return URL and clear it from sessionStorage
+        const returnUrl = getReturnUrl();
+        if (typeof window !== 'undefined') {
+          sessionStorage.removeItem('returnUrl');
+        }
+
+        router.push(returnUrl);
         router.refresh();
       }
     } catch {
@@ -89,10 +103,13 @@ export default function LoginSignupSection() {
     setIsLoading(true);
 
     try {
+      // Store return URL in sessionStorage for callback handler
+      const returnUrl = getReturnUrl();
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`,
         },
       });
 
