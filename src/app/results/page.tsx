@@ -74,80 +74,75 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
           <div className="relative overflow-hidden rounded-t-2xl">
             {/* Animated Background Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-bg-secondary via-bg-primary to-bg-secondary">
-              <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-20`}></div>
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-20`}
+              ></div>
               <div className="absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br from-accent-violet/20 to-accent-amber/20 rounded-full blur-3xl animate-pulse"></div>
               <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-gradient-to-br from-accent-emerald/20 to-accent-rose/20 rounded-full blur-3xl animate-pulse"></div>
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10 px-4 sm:px-6 md:px-8 pt-8 sm:pt-10 md:pt-12 pb-6 sm:pb-7 md:pb-8 text-center space-y-4 sm:space-y-5 md:space-y-6">
-              {/* Animated Icon */}
-              <div className="flex justify-center">
-                <div
-                  className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-500 relative group`}
-                >
-                  <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="text-5xl sm:text-6xl md:text-7xl relative z-10 animate-float">{angel.icon}</span>
-                </div>
-              </div>
-
-              {/* Number Pattern */}
-              <div className="space-y-2 sm:space-y-3">
-                <h3 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
-                  {angel.patterns}
-                </h3>
-
-                {/* Keyword Badge */}
-                <div className="flex justify-center">
-                  <div
-                    className={`inline-flex items-center gap-2 px-5 py-2 rounded-full ${colors.bg} border-2 ${colors.border} shadow-lg`}
-                  >
-                    <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
-                    <span className="text-white font-bold uppercase tracking-widest text-sm">
-                      {angel.keyword}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative Divider */}
-              <div className="flex items-center justify-center gap-3 py-2">
-                <div className={`h-px w-16 bg-gradient-to-r from-transparent via-white/30 to-transparent`}></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-white/40"></div>
-                <div className={`h-px w-16 bg-gradient-to-r from-transparent via-white/30 to-transparent`}></div>
-              </div>
-
-              {/* Title */}
-              <h4 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white/95 leading-relaxed px-3 sm:px-4">
-                {angel.title}
-              </h4>
             </div>
           </div>
 
           {/* Main Content Area */}
           <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-7 md:py-8 space-y-4 sm:space-y-5 md:space-y-6 bg-gradient-to-b from-bg-primary to-bg-secondary">
             {/* Meaning Section */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary-light/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xl">📖</span>
+            <div className="space-y-3 sm:space-y-4">
+              {/* Section Header with Divider */}
+              <div className="space-y-3">
+                <div>
+                  <h5 className="font-display text-base sm:text-lg font-semibold text-white tracking-tight">
+                    Divine Message
+                  </h5>
+                  <p className="text-primary/70 text-[10px] sm:text-xs font-medium mt-0.5">
+                    Spiritual Guidance
+                  </p>
                 </div>
-                <h5 className="font-display text-xl font-semibold text-white">
-                  Divine Message
-                </h5>
+
+                {/* Elegant Divider */}
+                <div className="flex items-center gap-2">
+                  <div className="h-px flex-1 bg-gradient-to-r from-primary/40 via-primary/20 to-transparent"></div>
+                  <div className="w-1 h-1 rounded-full bg-primary/40"></div>
+                  <div className="h-px flex-1 bg-gradient-to-l from-primary/40 via-primary/20 to-transparent"></div>
+                </div>
               </div>
 
-              <div className="glass-strong rounded-2xl p-6 border border-white/10">
-                <p className="text-white/85 text-base md:text-lg leading-relaxed">
-                  {angel.explanation}
-                </p>
+              {/* Message Content Card */}
+              <div className="relative group">
+                {/* Decorative Background Glow */}
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 via-primary-light/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                {/* Main Content */}
+                <div className="relative glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-primary/20 hover:border-primary/40 transition-all duration-300 bg-gradient-to-br from-white/5 to-white/0">
+                  {/* Quote Icon */}
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4 text-primary/20 text-2xl sm:text-3xl font-serif leading-none select-none">
+                    "
+                  </div>
+
+                  {/* Message Text */}
+                  <div className="relative z-10 pr-6 sm:pr-8">
+                    <p className="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed">
+                      {angel.explanation}
+                    </p>
+                  </div>
+
+                  {/* Bottom Accent Line */}
+                  <div className="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-primary/10">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1 h-1 rounded-full bg-primary/60 animate-pulse"></div>
+                      <span className="text-primary/70 text-[10px] sm:text-xs font-medium tracking-wider uppercase">
+                        Universal Wisdom
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Action Step Section */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                <div
+                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colors.gradient} border-2 ${colors.border} flex items-center justify-center flex-shrink-0 shadow-lg`}
+                >
                   <span className="text-xl">💫</span>
                 </div>
                 <h5 className="font-display text-xl font-semibold text-white">
@@ -159,7 +154,9 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
                 className={`glass-strong rounded-2xl p-6 border-2 ${colors.border} ${colors.bg} relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300`}
               >
                 {/* Subtle Background Animation */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}
+                ></div>
 
                 <p className="text-white/90 text-base md:text-lg leading-relaxed relative z-10">
                   {angel.action}
@@ -173,7 +170,12 @@ function AngelNumberCard({ angel }: { angel: AngelNumber }) {
                 <span className="text-2xl flex-shrink-0 mt-1">✨</span>
                 <div className="flex-1">
                   <p className="text-white/70 text-sm md:text-base leading-relaxed italic">
-                    "When you see <span className="text-white font-semibold">{angel.patterns}</span>, the universe is speaking directly to you. Trust the message and embrace the guidance."
+                    "When you see{' '}
+                    <span className="text-white font-semibold">
+                      {angel.patterns}
+                    </span>
+                    , the universe is speaking directly to you. Trust the
+                    message and embrace the guidance."
                   </p>
                 </div>
               </div>
@@ -227,35 +229,6 @@ function ResultsContent() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
-
-  // PDF download state
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const [pdfError, setPdfError] = useState<string | null>(null);
-
-  // Handle PDF download
-  const handleDownloadPDF = async () => {
-    setIsGeneratingPDF(true);
-    setPdfError(null);
-
-    try {
-      // Dynamically import PDF generator to reduce initial bundle size
-      const { generatePDF } = await import('@/utils/pdfGenerator');
-
-      // Generate PDF from the results content
-      await generatePDF('results-content', {
-        filename: `numerology-reading-${new Date(dob).toLocaleDateString().replace(/\//g, '-')}.pdf`,
-        quality: 0.95,
-        scale: 2,
-      });
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      setPdfError(
-        error instanceof Error ? error.message : 'Failed to generate PDF'
-      );
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
 
   // Handle save report
   const handleSaveReport = async () => {
@@ -374,7 +347,10 @@ function ResultsContent() {
 
   return (
     <main className="min-h-screen pt-16 sm:pt-20 md:pt-24 px-3 sm:px-4 md:px-6 pb-8 sm:pb-10 md:pb-12 mystical-bg">
-      <div id="results-content" className="max-w-6xl mx-auto space-y-8 sm:space-y-10 md:space-y-12">
+      <div
+        id="results-content"
+        className="max-w-6xl mx-auto space-y-8 sm:space-y-10 md:space-y-12"
+      >
         {/* Header */}
         <div className="text-center space-y-4 sm:space-y-5 md:space-y-6 animate-fade-in-up mt-6 sm:mt-8">
           <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
@@ -859,39 +835,142 @@ function ResultsContent() {
           </div>
 
           {/* Usage Guide */}
-          <div className="glass-strong rounded-2xl p-6 card-glow">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-accent-emerald/20 border border-primary/30 flex items-center justify-center text-base flex-shrink-0 mt-0.5">
-                💡
+          <div className="glass-strong rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 card-glow border border-primary/10 relative overflow-hidden">
+            {/* Decorative Background */}
+            <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-accent-emerald/10 to-primary/10 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-gradient-to-br from-accent-gold/10 to-accent-emerald/10 rounded-full blur-3xl"></div>
+
+            <div className="relative z-10">
+              {/* Header */}
+              <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6 md:mb-8">
+                <div className="flex-1">
+                  <h4 className="font-display text-lg sm:text-xl md:text-2xl font-semibold text-white mb-1">
+                    How to Use Lucky Numbers
+                  </h4>
+                  <p className="text-white/50 text-xs sm:text-sm">
+                    Practical applications for your numerological insights
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h4 className="font-display text-lg font-semibold text-white mb-3">
-                  How to Use Lucky Numbers
-                </h4>
-                <div className="grid md:grid-cols-2 gap-3">
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-accent-emerald text-sm mt-0.5 flex-shrink-0">✓</span>
-                    <span className="text-white/70 text-xs leading-relaxed">
-                      Choose friend numbers for important dates (weddings, business launches)
+
+              {/* Best Practices Section */}
+              <div className="space-y-4 sm:space-y-5 md:space-y-6">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center gap-2">
+                    <div className="h-px flex-1 bg-gradient-to-r from-accent-emerald/30 to-transparent"></div>
+                    <span className="text-accent-emerald text-xs sm:text-sm font-medium tracking-wider uppercase">
+                      Recommended Uses
                     </span>
+                    <div className="h-px flex-1 bg-gradient-to-l from-accent-emerald/30 to-transparent"></div>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-accent-emerald text-sm mt-0.5 flex-shrink-0">✓</span>
-                    <span className="text-white/70 text-xs leading-relaxed">
-                      Use in phone numbers, addresses, and vehicle registration
-                    </span>
+
+                  <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="group bg-white/5 hover:bg-accent-emerald/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 hover:border-accent-emerald/30 transition-all duration-300">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent-emerald/20 to-accent-emerald/10 border border-accent-emerald/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-accent-emerald text-xs sm:text-sm font-bold">
+                            ✓
+                          </span>
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <h5 className="text-white text-xs sm:text-sm font-semibold">
+                            Important Life Events
+                          </h5>
+                          <p className="text-white/60 text-xs leading-relaxed">
+                            Choose friend numbers for weddings, business
+                            launches, and milestone celebrations
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="group bg-white/5 hover:bg-accent-emerald/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 hover:border-accent-emerald/30 transition-all duration-300">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent-emerald/20 to-accent-emerald/10 border border-accent-emerald/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-accent-emerald text-xs sm:text-sm font-bold">
+                            ✓
+                          </span>
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <h5 className="text-white text-xs sm:text-sm font-semibold">
+                            Personal Identifiers
+                          </h5>
+                          <p className="text-white/60 text-xs leading-relaxed">
+                            Use in phone numbers, addresses, and vehicle
+                            registration plates
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="group bg-white/5 hover:bg-accent-emerald/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 hover:border-accent-emerald/30 transition-all duration-300">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent-emerald/20 to-accent-emerald/10 border border-accent-emerald/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-accent-emerald text-xs sm:text-sm font-bold">
+                            ✓
+                          </span>
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <h5 className="text-white text-xs sm:text-sm font-semibold">
+                            Financial Decisions
+                          </h5>
+                          <p className="text-white/60 text-xs leading-relaxed">
+                            Prefer for investment timing, signing contracts, and
+                            major purchases
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="group bg-white/5 hover:bg-accent-emerald/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 hover:border-accent-emerald/30 transition-all duration-300">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent-emerald/20 to-accent-emerald/10 border border-accent-emerald/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-accent-emerald text-xs sm:text-sm font-bold">
+                            ✓
+                          </span>
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <h5 className="text-white text-xs sm:text-sm font-semibold">
+                            Daily Decisions
+                          </h5>
+                          <p className="text-white/60 text-xs leading-relaxed">
+                            Apply when scheduling meetings, appointments, or
+                            starting new projects
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-accent-emerald text-sm mt-0.5 flex-shrink-0">✓</span>
-                    <span className="text-white/70 text-xs leading-relaxed">
-                      Prefer for financial investments and signing contracts
+                </div>
+
+                {/* Things to Avoid Section */}
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center gap-2">
+                    <div className="h-px flex-1 bg-gradient-to-r from-accent-rose/30 to-transparent"></div>
+                    <span className="text-accent-rose text-xs sm:text-sm font-medium tracking-wider uppercase">
+                      Avoid
                     </span>
+                    <div className="h-px flex-1 bg-gradient-to-l from-accent-rose/30 to-transparent"></div>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-accent-rose text-sm mt-0.5 flex-shrink-0">✗</span>
-                    <span className="text-white/70 text-xs leading-relaxed">
-                      Avoid enemy numbers for crucial life decisions
-                    </span>
+
+                  <div className="group bg-white/5 hover:bg-accent-rose/5 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 hover:border-accent-rose/30 transition-all duration-300">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-gradient-to-br from-accent-rose/20 to-accent-rose/10 border border-accent-rose/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-accent-rose text-xs sm:text-sm font-bold">
+                          ✗
+                        </span>
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <h5 className="text-white text-xs sm:text-sm font-semibold">
+                          Enemy Numbers for Critical Decisions
+                        </h5>
+                        <p className="text-white/60 text-xs leading-relaxed">
+                          Stay away from enemy numbers when making crucial life
+                          decisions, major commitments, or time-sensitive
+                          choices
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -938,7 +1017,11 @@ function ResultsContent() {
                           : 'bg-gradient-to-br from-primary/20 via-accent-gold/20 to-primary/20 border-2 border-primary/40 hover:scale-105 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/30'
                       }`}
                     >
-                      <span className={`relative z-10 ${num !== 0 ? 'bg-gradient-to-br from-accent-gold via-primary to-accent-champagne bg-clip-text text-transparent animate-gold-glow drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]' : ''}`}>{num || ''}</span>
+                      <span
+                        className={`relative z-10 ${num !== 0 ? 'bg-gradient-to-br from-accent-gold via-primary to-accent-champagne bg-clip-text text-transparent animate-gold-glow drop-shadow-[0_0_12px_rgba(212,175,55,0.5)]' : ''}`}
+                      >
+                        {num || ''}
+                      </span>
                       {num !== 0 && (
                         <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/0 to-accent-gold/0 group-hover:from-primary/20 group-hover:to-accent-gold/20 transition-all duration-300"></div>
                       )}
@@ -960,7 +1043,11 @@ function ResultsContent() {
                   Understanding Your Grid
                 </h4>
                 <p className="text-white/70 text-sm leading-relaxed">
-                  The Lo Shu Grid displays which numbers from 1-9 appear in your birth date. Each present number (shown in gold) reveals specific energies and traits that influence your personality and life path. Empty boxes indicate numbers absent from your birth date, representing areas for growth.
+                  The Lo Shu Grid displays which numbers from 1-9 appear in your
+                  birth date. Each present number (shown in gold) reveals
+                  specific energies and traits that influence your personality
+                  and life path. Empty boxes indicate numbers absent from your
+                  birth date, representing areas for growth.
                 </p>
               </div>
             </div>
@@ -982,7 +1069,8 @@ function ResultsContent() {
                       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-strong border border-primary/30 mb-2">
                         <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary to-secondary animate-pulse"></div>
                         <span className="text-white/70 text-xs font-medium tracking-wider uppercase">
-                          {plane.analysis.fillPercentage}% Active • {plane.analysis.strength.replace('-', ' ')}
+                          {plane.analysis.fillPercentage}% Active •{' '}
+                          {plane.analysis.strength.replace('-', ' ')}
                         </span>
                       </div>
                       <h3 className="font-display text-2xl md:text-3xl font-semibold text-white tracking-tight">
@@ -1081,7 +1169,8 @@ function ResultsContent() {
             {/* Description */}
             <div className="glass-strong rounded-2xl p-6 card-glow">
               <p className="text-white/80 text-sm leading-relaxed text-center">
-                Numbers absent from your birth date and their potential effects on your life
+                Numbers absent from your birth date and their potential effects
+                on your life
               </p>
             </div>
 
@@ -1092,7 +1181,7 @@ function ResultsContent() {
                   key={missing.number}
                   className="glass-strong rounded-2xl p-6 space-y-4 card-glow hover:-translate-y-1 transition-all duration-300 group"
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-rose/20 to-accent-violet/20 border border-accent-rose/30 flex items-center justify-center text-xl font-bold text-white group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       {missing.number}
                     </div>
@@ -1108,7 +1197,7 @@ function ResultsContent() {
 
             {/* Remedy Tip */}
             <div className="glass-strong rounded-2xl p-6 card-glow">
-              <div className="flex items-start gap-3">
+              <div className="flex items-center gap-4">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary/20 to-accent-amber/20 border border-secondary/30 flex items-center justify-center text-base flex-shrink-0 mt-0.5">
                   💡
                 </div>
@@ -1117,7 +1206,9 @@ function ResultsContent() {
                     Remedy Tip
                   </h4>
                   <p className="text-white/70 text-xs leading-relaxed">
-                    You can strengthen missing numbers by wearing their associated colors, using their gemstones, or performing specific practices aligned with those planetary energies.
+                    You can strengthen missing numbers by wearing their
+                    associated colors, using their gemstones, or performing
+                    specific practices aligned with those planetary energies.
                   </p>
                 </div>
               </div>
@@ -1155,7 +1246,9 @@ function ResultsContent() {
           {/* Description Card */}
           <div className="glass-strong rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 card-glow">
             <p className="text-white/80 text-xs sm:text-sm leading-relaxed text-center max-w-3xl mx-auto">
-              Have you been seeing repeating numbers on clocks, receipts, or license plates? These aren't coincidences—they're Angel Numbers, gentle messages from the universe guiding your path.
+              Have you been seeing repeating numbers on clocks, receipts, or
+              license plates? These aren't coincidences they're Angel Numbers,
+              gentle messages from the universe guiding your path.
             </p>
           </div>
 
@@ -1190,11 +1283,6 @@ function ResultsContent() {
             <p className="text-red-400 text-lg font-semibold">✗ {saveError}</p>
           </div>
         )}
-        {pdfError && (
-          <div className="glass rounded-2xl p-6 text-center border-2 border-red-500/50 bg-red-500/10 animate-fade-in">
-            <p className="text-red-400 text-lg font-semibold">✗ {pdfError}</p>
-          </div>
-        )}
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 md:gap-6 justify-center animate-fade-in-up reveal-9">
@@ -1213,22 +1301,8 @@ function ResultsContent() {
             )}
           </button>
           <button
-            onClick={handleDownloadPDF}
-            disabled={isGeneratingPDF}
-            className="btn-secondary text-sm sm:text-base md:text-lg min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isGeneratingPDF ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                Generating PDF...
-              </span>
-            ) : (
-              'Download PDF'
-            )}
-          </button>
-          <button
             onClick={() => router.push('/calculator')}
-            className="btn-outline text-lg"
+            className="btn-outline text-sm sm:text-base md:text-lg min-h-[44px]"
           >
             New Calculation
           </button>
