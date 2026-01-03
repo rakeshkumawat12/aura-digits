@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   Card,
@@ -27,7 +26,6 @@ import {
 } from "lucide-react";
 
 export default function SignupSection() {
-  const router = useRouter();
   const supabase = createClient();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
