@@ -40,9 +40,9 @@ export default function SignupSection() {
   // Get return URL from sessionStorage
   const getReturnUrl = () => {
     if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('returnUrl') || '/dashboard';
+      return sessionStorage.getItem('returnUrl') || '/calculator';
     }
-    return '/dashboard';
+    return '/calculator';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
