@@ -31,28 +31,33 @@ A modern numerology calculator providing personalized insights through Life Path
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd aura-digits
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
+
 ```bash
 cp .env.example .env.local
 ```
 
 Add your Supabase credentials to `.env.local`:
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 4. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -125,11 +130,3 @@ npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
 ```
-
-## License
-
-MIT
-
-## Support
-
-For issues or questions, please open an issue on GitHub.
